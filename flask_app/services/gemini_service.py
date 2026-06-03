@@ -63,32 +63,49 @@ RULES:
 - Only write SELECT statements
 """
 
-# Working Gemini models to try in order
+# Gemini API (v1beta + API key header — recommended by Google AI Studio)
+API_BASE = "https://generativelanguage.googleapis.com/v1beta"
 MODELS_TO_TRY = [
-    "gemini-2.0-flash-lite",
+    "gemini-2.5-flash",
     "gemini-2.0-flash",
+    "gemini-2.0-flash-lite",
     "gemini-1.5-flash",
-    "gemini-1.0-pro",
 ]
+
+
+def _normalize_api_key(raw: str | None) -> str | None:
+    """Strip whitespace/quotes often added when pasting into Vercel env vars."""
+    if not raw:
+        return None
+    key = raw.strip().strip('"').strip("'")
+    return key or None
 
 
 class GeminiService:
 
     def __init__(self):
-        self.api_key = os.getenv("GEMINI_API_KEY")
+        self.api_key = _normalize_api_key(os.getenv("GEMINI_API_KEY"))
         self.model_name = None
         self._model_checked = False
 
+    def _gemini_post(self, model: str, body: dict, timeout: int = 30) -> requests.Response:
+        url = f"{API_BASE}/models/{model}:generateContent"
+        return requests.post(
+            url,
+            headers={
+                "x-goog-api-key": self.api_key,
+                "Content-Type": "application/json",
+            },
+            json=body,
+            timeout=timeout,
+        )
+
     def _ensure_model(self):
-        """Resolve model on first use — avoids slow API probes during serverless cold start."""
+        """Pick a working model (probes API once per cold start)."""
         if self._model_checked:
             return
         self._model_checked = True
         if not self.api_key:
-            return
-        if os.getenv("VERCEL"):
-            self.model_name = MODELS_TO_TRY[0]
-            log.info("Vercel deploy: using Gemini model %s (no startup probe)", self.model_name)
             return
         self._find_working_model()
 
@@ -96,29 +113,30 @@ class GeminiService:
         """Try each model until one works."""
         if not self.api_key:
             log.warning("GEMINI_API_KEY not set. Running in demo mode.")
+            self.model_name = None
             return
 
         for model in MODELS_TO_TRY:
-            url = (
-                f"https://generativelanguage.googleapis.com/v1/models/"
-                f"{model}:generateContent?key={self.api_key}"
-            )
             try:
-                resp = requests.post(
-                    url,
-                    json={"contents": [{"parts": [{"text": "Say OK"}]}]},
-                    timeout=10
+                resp = self._gemini_post(
+                    model,
+                    {"contents": [{"parts": [{"text": "Say OK"}]}]},
+                    timeout=10,
                 )
                 if resp.status_code == 200:
                     self.model_name = model
                     log.info("Gemini AI ready - using model: %s", model)
                     return
-                else:
-                    log.debug("Model %s returned %d - trying next", model, resp.status_code)
+                if resp.status_code == 401:
+                    log.error("Gemini API key rejected (401). Check GEMINI_API_KEY in Vercel.")
+                    self.model_name = None
+                    return
+                log.debug("Model %s returned %d - trying next", model, resp.status_code)
             except Exception as e:
                 log.debug("Model %s error: %s - trying next", model, str(e))
 
         log.warning("No working Gemini model found. Running in demo mode.")
+        self.model_name = None
 
     def is_available(self) -> bool:
         self._ensure_model()
@@ -141,23 +159,28 @@ Return ONLY the raw SQL - no markdown, no backticks, no explanation.
 """
         try:
             log.info("Sending to Gemini (%s): %s", self.model_name, user_question[:80])
-            url = (
-                f"https://generativelanguage.googleapis.com/v1/models/"
-                f"{self.model_name}:generateContent?key={self.api_key}"
-            )
-            resp = requests.post(
-                url,
-                json={"contents": [{"parts": [{"text": prompt}]}]},
-                timeout=30
+            resp = self._gemini_post(
+                self.model_name,
+                {"contents": [{"parts": [{"text": prompt}]}]},
             )
 
             if resp.status_code == 429:
                 return "", "Rate limit hit — please wait 1 minute and try again."
 
+            if resp.status_code == 401:
+                self.model_name = None
+                self._model_checked = False
+                return (
+                    "",
+                    "Invalid Gemini API key. In Vercel → Settings → Environment Variables, "
+                    "set GEMINI_API_KEY to a new key from https://aistudio.google.com/app/apikey "
+                    "(no quotes, no spaces), then Redeploy.",
+                )
+
             if resp.status_code != 200:
-                # Try refreshing the model on 404
-                if resp.status_code == 404:
+                if resp.status_code in (404, 400):
                     self.model_name = None
+                    self._model_checked = False
                     self._find_working_model()
                     if self.model_name:
                         return self.generate_sql(user_question)
