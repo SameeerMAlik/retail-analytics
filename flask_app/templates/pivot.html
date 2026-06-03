@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+
+{% block title %}Pivot Analysis — Enterprise Retail{% endblock %}
+
+{% block page_title %}Pivot Analysis{% endblock %}
+{% block page_subtitle %}Drag-and-drop multidimensional data exploration with PivotTable.js{% endblock %}
+
+{% block extra_head %}
+<!-- PivotTable.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.23.0/pivot.min.css">
+<style>
+  /* ── Override PivotTable default styles to match dark cyber theme ── */
+  .pvtUi { color: #e2e8f0 !important; background: transparent !important; }
+  .pvtUi select, .pvtUi input { background: #1a1f35 !important; color: #e2e8f0 !important; border: 1px solid #2d3561 !important; border-radius: 6px; padding: 4px 8px; }
+  .pvtAxisContainer, .pvtVals { background: #12172a !important; border: 1px solid #2d3561 !important; border-radius: 8px; }
+  .pvtAttr { background: #1a1f35 !important; border: 1px solid #2d3561 !important; color: #00d4ff !important; border-radius: 6px; padding: 3px 8px; cursor: grab; }
+  .pvtAttr:hover { background: #00d4ff22 !important; border-color: #00d4ff !important; }
+  .pvtFilterBox { background: #12172a !important; border: 1px solid #2d3561 !important; }
+  table.pvtTable { border-collapse: separate; border-spacing: 0; width: 100%; }
+  table.pvtTable thead tr th, table.pvtTable tbody tr th {
+    background: #1a1f35 !important;
+    color: #94a3b8 !important;
+    border: 1px solid #2d3561 !important;
+    padding: 8px 12px !important;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  table.pvtTable tbody tr td {
+    background: #0f1629 !important;
+    color: #e2e8f0 !important;
+    border: 1px solid #1e293b !important;
+    padding: 6px 12px !important;
+    font-size: 13px;
+    text-align: right;
+  }
+  table.pvtTable tbody tr:hover td { background: #1a1f35 !important; }
+  .pvtColLabel, .pvtRowLabel { font-weight: 600 !important; color: #00d4ff !important; }
+  .pvtTotalLabel, .pvtGrandTotal { color: #10b981 !important; font-weight: 700 !important; background: #0a0e1a !important; }
+  .pvtTotal, .pvtGrandTotalLabel { background: #0f1629 !important; color: #10b981 !important; font-weight: 600 !important; }
+  .pvtDropZone { border: 2px dashed #2d3561 !important; }
+  .pvtDropZone.pvtDragHover { border-color: #00d4ff !important; background: #00d4ff11 !important; }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- ── Info Banner ────────────────────────────────────────────── -->
+<div class="alert mb-4" style="background:#1a1f35; border:1px solid #00d4ff33; border-left:4px solid #00d4ff;">
+  <div class="d-flex align-items-center gap-3">
+    <span style="font-size:1.5rem;">🔀</span>
+    <div>
+      <strong style="color:#00d4ff;">Interactive Pivot Explorer</strong>
+      <p class="mb-0 text-muted small">Drag fields from <strong>Available Fields</strong> into Rows, Columns, or Values to build custom pivot tables. Switch aggregators to Sum, Average, Count, and more. Data loads from your analytics warehouse.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Pivot Controls Row ─────────────────────────────────────── -->
+<div class="row g-3 mb-3">
+  <div class="col-md-4">
+    <div class="chart-card p-3">
+      <label class="form-label text-muted small fw-bold">QUICK PRESET</label>
+      <select id="pivotPreset" class="form-select form-select-sm"
+        style="background:#1a1f35; color:#e2e8f0; border-color:#2d3561;">
+        <option value="revenue_by_category_month">Revenue by Category × Month</option>
+        <option value="orders_by_age_payment">Orders by Age Group × Payment Method</option>
+        <option value="margin_by_category">Margin % by Category × Subcategory</option>
+        <option value="clv_by_city">Customer Revenue by City × Age Group</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="chart-card p-3">
+      <label class="form-label text-muted small fw-bold">ROW LIMIT</label>
+      <select id="rowLimit" class="form-select form-select-sm"
+        style="background:#1a1f35; color:#e2e8f0; border-color:#2d3561;">
+        <option value="500">500 rows (fast)</option>
+        <option value="2000">2,000 rows</option>
+        <option value="5000">5,000 rows</option>
+        <option value="0">All rows (slow)</option>
+      </select>
+    </div>
+  </div>
+  <div class="col-md-4 d-flex align-items-end">
+    <div class="chart-card p-3 w-100">
+      <button id="loadPivotBtn" class="btn btn-sm w-100"
+        style="background: linear-gradient(135deg,#00d4ff22,#7c3aed22); border:1px solid #00d4ff55; color:#00d4ff;">
+        ⚡ Load / Refresh Data
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Pivot Table Container ─────────────────────────────────── -->
+<div class="chart-card mb-4">
+  <div class="chart-header">
+    <span class="chart-title">Pivot Explorer</span>
+    <div id="pivotStatus" class="text-muted small">Click "Load / Refresh Data" to begin</div>
+  </div>
+  <div id="pivotContainer" class="p-3" style="overflow-x: auto; min-height: 300px;">
+    <div class="d-flex align-items-center justify-content-center" style="height:200px; color:#64748b;">
+      <div class="text-center">
+        <div style="font-size:3rem; margin-bottom:1rem;">🔀</div>
+        <p>Click <strong style="color:#00d4ff;">Load / Refresh Data</strong> above to build your pivot table</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Export Row ─────────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-12">
+    <div class="chart-card p-3">
+      <div class="d-flex gap-3 align-items-center flex-wrap">
+        <span class="text-muted small fw-bold">EXPORT:</span>
+        <button id="exportCsvBtn" class="btn btn-sm" style="background:#10b98122; border:1px solid #10b981; color:#10b981;" disabled>
+          📥 Export CSV
+        </button>
+        <button id="exportJsonBtn" class="btn btn-sm" style="background:#7c3aed22; border:1px solid #7c3aed; color:#7c3aed;" disabled>
+          📦 Export JSON
+        </button>
+        <span class="ms-auto text-muted small" id="pivotRowCount"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Field Reference Card ───────────────────────────────────── -->
+<div class="row g-3">
+  <div class="col-12">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Available Fields Reference</span>
+      </div>
+      <div class="row g-3 p-3">
+        <div class="col-md-3">
+          <h6 style="color:#00d4ff; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Dimensions</h6>
+          <div class="d-flex flex-wrap gap-1" id="dimFields"></div>
+        </div>
+        <div class="col-md-3">
+          <h6 style="color:#7c3aed; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Measures</h6>
+          <div class="d-flex flex-wrap gap-1" id="measureFields"></div>
+        </div>
+        <div class="col-md-3">
+          <h6 style="color:#10b981; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Time</h6>
+          <div class="d-flex flex-wrap gap-1" id="timeFields"></div>
+        </div>
+        <div class="col-md-3">
+          <h6 style="color:#f59e0b; font-size:11px; text-transform:uppercase; letter-spacing:1px;">Customer</h6>
+          <div class="d-flex flex-wrap gap-1" id="customerFields"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- jQuery (required by PivotTable.js) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- PivotTable.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pivottable/2.23.0/pivot.min.js"></script>
+
+<script>
+let pivotRawData = [];
+
+// ── Field categories for reference panel ──────────────────────
+const FIELD_META = {
+  dims:     ['category', 'subcategory', 'payment_method', 'order_status', 'city', 'country', 'age_group', 'supplier_name'],
+  measures: ['net_revenue', 'gross_profit', 'quantity', 'margin_pct', 'unit_price', 'competitor_price_delta'],
+  time:     ['order_month', 'order_quarter', 'order_year'],
+  customer: ['full_name', 'gender', 'city', 'country']
+};
+
+// ── Preset configurations ─────────────────────────────────────
+const PRESETS = {
+  revenue_by_category_month: {
+    rows: ['category'], cols: ['order_month'],
+    aggregator: $.pivotUtilities.aggregators['Sum'](["net_revenue"])
+  },
+  orders_by_age_payment: {
+    rows: ['age_group'], cols: ['payment_method'],
+    aggregator: $.pivotUtilities.aggregators['Count']()
+  },
+  margin_by_category: {
+    rows: ['category', 'subcategory'], cols: [],
+    aggregator: $.pivotUtilities.aggregators['Average'](["margin_pct"])
+  },
+  clv_by_city: {
+    rows: ['city'], cols: ['age_group'],
+    aggregator: $.pivotUtilities.aggregators['Sum'](["net_revenue"])
+  }
+};
+
+// ── Load pivot data from API ──────────────────────────────────
+async function loadPivotData() {
+  const btn       = document.getElementById('loadPivotBtn');
+  const statusEl  = document.getElementById('pivotStatus');
+  const limit     = document.getElementById('rowLimit').value;
+  const preset    = document.getElementById('pivotPreset').value;
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Loading…';
+  statusEl.textContent = 'Fetching data from warehouse…';
+
+  try {
+    const res = await fetch(`/pivot/api/data?limit=${limit}`);
+    const d   = await res.json();
+    if (d.error) throw new Error(d.error);
+
+    pivotRawData = d.rows;
+    document.getElementById('pivotRowCount').textContent = `${pivotRawData.length.toLocaleString()} rows loaded`;
+    statusEl.textContent = `✅ ${pivotRawData.length.toLocaleString()} rows loaded`;
+
+    renderPivot(preset);
+    renderFieldTags();
+
+    document.getElementById('exportCsvBtn').disabled  = false;
+    document.getElementById('exportJsonBtn').disabled = false;
+  } catch (e) {
+    statusEl.textContent = '❌ Error: ' + e.message;
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⚡ Load / Refresh Data';
+  }
+}
+
+// ── Render PivotTable.js ──────────────────────────────────────
+function renderPivot(presetKey) {
+  const p   = PRESETS[presetKey] || PRESETS['revenue_by_category_month'];
+  const cfg = {
+    rows:        p.rows,
+    cols:        p.cols,
+    aggregator:  p.aggregator,
+    rendererName: 'Table',
+    unusedAttrsVertical: false
+  };
+
+  $('#pivotContainer').pivotUI(pivotRawData, cfg);
+}
+
+// ── Field Reference Tags ──────────────────────────────────────
+function renderFieldTags() {
+  const renderBadges = (containerId, fields, color) => {
+    const el = document.getElementById(containerId);
+    el.innerHTML = fields.map(f =>
+      `<span class="badge" style="background:${color}22; color:${color}; border:1px solid ${color}33; font-size:10px; cursor:default;">${f}</span>`
+    ).join('');
+  };
+  renderBadges('dimFields',      FIELD_META.dims,     '#00d4ff');
+  renderBadges('measureFields',  FIELD_META.measures, '#7c3aed');
+  renderBadges('timeFields',     FIELD_META.time,     '#10b981');
+  renderBadges('customerFields', FIELD_META.customer, '#f59e0b');
+}
+
+// ── Preset change ─────────────────────────────────────────────
+document.getElementById('pivotPreset').addEventListener('change', function() {
+  if (pivotRawData.length) renderPivot(this.value);
+});
+
+// ── Load button ───────────────────────────────────────────────
+document.getElementById('loadPivotBtn').addEventListener('click', loadPivotData);
+
+// ── CSV Export ────────────────────────────────────────────────
+document.getElementById('exportCsvBtn').addEventListener('click', () => {
+  if (!pivotRawData.length) return;
+  const keys = Object.keys(pivotRawData[0]);
+  const rows = [keys.join(','), ...pivotRawData.map(r => keys.map(k => JSON.stringify(r[k] ?? '')).join(','))];
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'pivot_export.csv';
+  a.click();
+});
+
+// ── JSON Export ───────────────────────────────────────────────
+document.getElementById('exportJsonBtn').addEventListener('click', () => {
+  if (!pivotRawData.length) return;
+  const blob = new Blob([JSON.stringify(pivotRawData, null, 2)], { type: 'application/json' });
+  const a    = document.createElement('a');
+  a.href     = URL.createObjectURL(blob);
+  a.download = 'pivot_export.json';
+  a.click();
+});
+
+// ── Render field reference on load ───────────────────────────
+renderFieldTags();
+</script>
+{% endblock %}

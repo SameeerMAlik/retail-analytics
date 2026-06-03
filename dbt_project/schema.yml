@@ -1,0 +1,202 @@
+version: 2
+
+# ============================================================
+# dbt Sources — Snowflake Staging Tables
+# ============================================================
+sources:
+  - name: staging
+    database: RETAIL_ANALYTICS_DB
+    schema: STAGING
+    description: "Raw staging data loaded from CSV files via Python"
+    tables:
+      - name: STG_CUSTOMERS
+        description: "Raw customer records"
+        columns:
+          - name: CUSTOMER_ID
+            tests: [unique, not_null]
+          - name: EMAIL
+            tests: [not_null]
+          - name: COUNTRY
+            tests: [not_null]
+
+      - name: STG_PRODUCTS
+        description: "Raw product catalog"
+        columns:
+          - name: PRODUCT_ID
+            tests: [unique, not_null]
+          - name: RETAIL_PRICE
+            tests: [not_null]
+
+      - name: STG_ORDERS
+        description: "Raw order headers"
+        columns:
+          - name: ORDER_ID
+            tests: [unique, not_null]
+          - name: CUSTOMER_ID
+            tests: [not_null]
+
+      - name: STG_ORDER_ITEMS
+        description: "Raw order line items"
+        columns:
+          - name: ORDER_ITEM_ID
+            tests: [unique, not_null]
+          - name: ORDER_ID
+            tests: [not_null]
+          - name: PRODUCT_ID
+            tests: [not_null]
+
+      - name: STG_COMPETITOR_PRICES
+        description: "Scraped competitor pricing data"
+
+# ============================================================
+# dbt Models — Staging Layer
+# ============================================================
+models:
+  # ── Staging ──────────────────────────────────────────────
+  - name: stg_customers
+    description: "Cleaned and standardized customer data from staging"
+    columns:
+      - name: CUSTOMER_ID
+        description: "Unique customer identifier"
+        tests:
+          - unique
+          - not_null
+      - name: EMAIL
+        description: "Customer email (lowercased)"
+        tests:
+          - not_null
+      - name: GENDER
+        description: "Customer gender"
+        tests:
+          - accepted_values:
+              values: ['MALE', 'FEMALE', 'NON-BINARY']
+      - name: AGE_GROUP
+        tests:
+          - accepted_values:
+              values: ['18-24', '25-34', '35-44', '45-54', '55-64', '65+']
+
+  - name: stg_products
+    description: "Cleaned product catalog"
+    columns:
+      - name: PRODUCT_ID
+        tests: [unique, not_null]
+      - name: RETAIL_PRICE
+        tests: [not_null]
+      - name: BASE_COST
+        tests: [not_null]
+      - name: PRICE_TIER
+        tests:
+          - accepted_values:
+              values: ['Budget', 'Mid-range', 'Premium', 'Luxury']
+
+  - name: stg_orders
+    description: "Cleaned order headers"
+    columns:
+      - name: ORDER_ID
+        tests: [unique, not_null]
+      - name: CUSTOMER_ID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: CUSTOMER_ID
+      - name: ORDER_STATUS
+        tests:
+          - accepted_values:
+              values: ['Completed', 'Shipped', 'Processing', 'Cancelled', 'Returned']
+
+  - name: stg_order_items
+    description: "Cleaned order line items"
+    columns:
+      - name: ORDER_ITEM_ID
+        tests: [unique, not_null]
+      - name: ORDER_ID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: ORDER_ID
+      - name: PRODUCT_ID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_products')
+              field: PRODUCT_ID
+      - name: QUANTITY
+        tests: [not_null]
+      - name: UNIT_PRICE
+        tests: [not_null]
+
+  # ── Marts (Dimensions & Fact) ─────────────────────────────
+  - name: dim_customer
+    description: "Customer dimension — star schema"
+    columns:
+      - name: CUSTOMER_SK
+        tests: [unique, not_null]
+      - name: CUSTOMER_ID
+        tests: [unique, not_null]
+      - name: REGION
+        tests:
+          - accepted_values:
+              values: ['North America', 'Europe', 'APAC', 'Middle East', 'Other']
+      - name: CUSTOMER_SEGMENT
+        tests:
+          - accepted_values:
+              values: ['New', 'Regular', 'Loyal']
+
+  - name: dim_product
+    description: "Product dimension — star schema"
+    columns:
+      - name: PRODUCT_SK
+        tests: [unique, not_null]
+      - name: PRODUCT_ID
+        tests: [unique, not_null]
+      - name: GROSS_MARGIN_PCT
+        tests: [not_null]
+
+  - name: fct_sales
+    description: "Central fact table — grain: order line item"
+    columns:
+      - name: ORDER_ITEM_ID
+        tests: [unique, not_null]
+      - name: ORDER_ID
+        tests: [not_null]
+      - name: CUSTOMER_SK
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: CUSTOMER_SK
+      - name: PRODUCT_SK
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: PRODUCT_SK
+      - name: QUANTITY
+        tests: [not_null]
+      - name: NET_REVENUE
+        tests: [not_null]
+
+  # ── Analytics ─────────────────────────────────────────────
+  - name: daily_revenue_trends
+    description: "Daily and monthly revenue aggregates"
+    columns:
+      - name: ORDER_DATE
+        tests: [unique, not_null]
+
+  - name: customer_lifetime_value
+    description: "CLV + RFM segmentation per customer"
+    columns:
+      - name: CUSTOMER_SK
+        tests: [unique, not_null]
+      - name: CLV_TIER
+        tests:
+          - accepted_values:
+              values: ['Champions', 'Loyal', 'Potential Loyal', 'Recent', 'At Risk', 'Hibernating']
+
+  - name: top_product_categories
+    description: "Revenue and profit by product category"
+    columns:
+      - name: CATEGORY
+        tests: [not_null]

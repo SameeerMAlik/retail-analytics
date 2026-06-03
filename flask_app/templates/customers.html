@@ -1,0 +1,284 @@
+{% extends "base.html" %}
+
+{% block title %}Customer Insights — Enterprise Retail{% endblock %}
+
+{% block page_title %}Customer Insights{% endblock %}
+{% block page_subtitle %}Lifetime value analysis, segmentation & behavioural patterns{% endblock %}
+
+{% block content %}
+
+<!-- ── KPI Cards ─────────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-cyan);">
+      <div class="kpi-label">Total Customers</div>
+      <div class="kpi-value" id="kpi-total-customers">—</div>
+      <div class="kpi-sub">Registered accounts</div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-purple);">
+      <div class="kpi-label">Avg Lifetime Value</div>
+      <div class="kpi-value" id="kpi-avg-clv">—</div>
+      <div class="kpi-sub">Revenue per customer</div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-green);">
+      <div class="kpi-label">VIP Customers</div>
+      <div class="kpi-value" id="kpi-vip-count">—</div>
+      <div class="kpi-sub">CLV &gt; $5,000</div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-orange);">
+      <div class="kpi-label">Avg Orders / Customer</div>
+      <div class="kpi-value" id="kpi-avg-orders">—</div>
+      <div class="kpi-sub">Purchase frequency</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Row 1: CLV Distribution + Age Group Bar ────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-6">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">CLV Distribution — Customer Segments</span>
+        <span class="badge bg-cyan-soft">Bar Chart</span>
+      </div>
+      <canvas id="clvDistChart" height="260"></canvas>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Revenue by Age Group</span>
+        <span class="badge bg-purple-soft">Grouped Bar</span>
+      </div>
+      <canvas id="ageGroupChart" height="260"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ── Row 2: Top Customers Table + Geography ─────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-8">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Top 25 Customers by Lifetime Value</span>
+        <div class="d-flex align-items-center gap-2">
+          <input id="customerSearch" type="text" class="form-control form-control-sm"
+            placeholder="Search name / city…"
+            style="width:180px; background:#1a1f35; color:#e2e8f0; border-color:#2d3561;">
+          <span class="badge bg-cyan-soft">DataTable</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover table-sm mb-0" id="customerTable">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Customer</th>
+              <th>City</th>
+              <th>Age Group</th>
+              <th>Total Orders</th>
+              <th>Total Revenue</th>
+              <th>Avg Order Value</th>
+              <th>Segment</th>
+            </tr>
+          </thead>
+          <tbody id="customerTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Payment Method Mix</span>
+        <span class="badge bg-green-soft">Pie</span>
+      </div>
+      <canvas id="paymentPieChart" height="260"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ── Row 3: Registration Trend ──────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-12">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">New Customer Registrations — Monthly Trend</span>
+        <span class="badge bg-orange-soft">Line Chart</span>
+      </div>
+      <canvas id="regTrendChart" height="160"></canvas>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// ── Load customer analytics data ──────────────────────────────
+async function loadCustomerData() {
+  try {
+    const res = await fetch('/customers/api/data');
+    const d   = await res.json();
+    if (d.error) throw new Error(d.error);
+    renderKPIs(d);
+    renderCLVChart(d.clv_segments);
+    renderAgeGroupChart(d.age_groups);
+    renderCustomerTable(d.top_customers);
+    renderPaymentPie(d.payment_methods);
+    renderRegTrend(d.registration_trend);
+  } catch (e) {
+    console.error('Customer data error:', e);
+  }
+}
+
+// ── KPIs ──────────────────────────────────────────────────────
+function renderKPIs(d) {
+  document.getElementById('kpi-total-customers').textContent = d.kpis.total_customers.toLocaleString();
+  document.getElementById('kpi-avg-clv').textContent         = '$' + d.kpis.avg_clv.toLocaleString();
+  document.getElementById('kpi-vip-count').textContent       = d.kpis.vip_count.toLocaleString();
+  document.getElementById('kpi-avg-orders').textContent      = d.kpis.avg_orders_per_customer;
+}
+
+// ── CLV Segment Distribution ──────────────────────────────────
+function renderCLVChart(segments) {
+  new Chart(document.getElementById('clvDistChart'), {
+    type: 'bar',
+    data: {
+      labels: segments.map(s => s.segment),
+      datasets: [{
+        label: 'Customers',
+        data: segments.map(s => s.count),
+        backgroundColor: ['#ef444444','#f59e0b44','#10b98144','#00d4ff44'],
+        borderColor:     ['#ef4444',  '#f59e0b',  '#10b981',  '#00d4ff'],
+        borderWidth: 2, borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+        y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } }
+      }
+    }
+  });
+}
+
+// ── Revenue by Age Group ──────────────────────────────────────
+function renderAgeGroupChart(groups) {
+  new Chart(document.getElementById('ageGroupChart'), {
+    type: 'bar',
+    data: {
+      labels: groups.map(g => g.age_group),
+      datasets: [{
+        label: 'Total Revenue ($)',
+        data: groups.map(g => g.total_revenue),
+        backgroundColor: '#7c3aed55',
+        borderColor: '#7c3aed',
+        borderWidth: 2, borderRadius: 6
+      }, {
+        label: 'Avg CLV ($)',
+        data: groups.map(g => g.avg_clv),
+        backgroundColor: '#00d4ff33',
+        borderColor: '#00d4ff',
+        borderWidth: 2, borderRadius: 6,
+        yAxisID: 'y2'
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: '#94a3b8' } } },
+      scales: {
+        x:  { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+        y:  { ticks: { color: '#94a3b8', callback: v => '$'+(v/1000).toFixed(0)+'k' }, grid: { color: '#1e293b' } },
+        y2: { position: 'right', ticks: { color: '#00d4ff', callback: v => '$'+v.toLocaleString() }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+// ── Customer Table ────────────────────────────────────────────
+function renderCustomerTable(customers) {
+  const tbody = document.getElementById('customerTableBody');
+  tbody.innerHTML = customers.map((c, i) => {
+    const segColor = { 'VIP': '#10b981', 'High Value': '#00d4ff', 'Mid Value': '#f59e0b', 'Standard': '#94a3b8' };
+    const color    = segColor[c.segment] || '#94a3b8';
+    return `
+      <tr>
+        <td class="text-muted">${i+1}</td>
+        <td><strong>${c.full_name}</strong></td>
+        <td>${c.city}</td>
+        <td><span class="badge bg-secondary">${c.age_group}</span></td>
+        <td>${c.total_orders}</td>
+        <td><strong style="color:var(--accent-cyan)">$${c.total_revenue.toLocaleString()}</strong></td>
+        <td>$${c.avg_order_value.toLocaleString()}</td>
+        <td><span class="badge" style="background:${color}22; color:${color}; border:1px solid ${color}55;">${c.segment}</span></td>
+      </tr>`;
+  }).join('');
+
+  // Live search filter
+  document.getElementById('customerSearch').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#customerTableBody tr').forEach(row => {
+      row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+}
+
+// ── Payment Pie ───────────────────────────────────────────────
+function renderPaymentPie(methods) {
+  new Chart(document.getElementById('paymentPieChart'), {
+    type: 'pie',
+    data: {
+      labels: methods.map(m => m.method),
+      datasets: [{
+        data: methods.map(m => m.count),
+        backgroundColor: ['#00d4ff','#7c3aed','#10b981','#f59e0b','#ef4444'],
+        borderColor: '#0a0e1a', borderWidth: 3, hoverOffset: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 14 } } }
+    }
+  });
+}
+
+// ── Registration Trend ────────────────────────────────────────
+function renderRegTrend(trend) {
+  new Chart(document.getElementById('regTrendChart'), {
+    type: 'line',
+    data: {
+      labels: trend.map(t => t.month),
+      datasets: [{
+        label: 'New Customers',
+        data: trend.map(t => t.count),
+        borderColor: '#10b981',
+        backgroundColor: 'rgba(16,185,129,0.12)',
+        fill: true,
+        tension: 0.4,
+        pointRadius: 4,
+        pointHoverRadius: 7
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { labels: { color: '#94a3b8' } } },
+      scales: {
+        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+        y: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } }
+      }
+    }
+  });
+}
+
+loadCustomerData();
+</script>
+{% endblock %}

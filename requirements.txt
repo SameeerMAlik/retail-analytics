@@ -1,0 +1,40 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Enterprise Retail Analytics Engine — Python Dependencies
+# ─────────────────────────────────────────────────────────────────────────────
+# Install: pip install -r requirements.txt
+# Python:  3.11+
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Data Generation ───────────────────────────────────────────
+faker==24.11.0              # Realistic synthetic data generation
+pandas==2.2.2               # DataFrame operations and CSV I/O
+numpy==1.26.4               # Numerical distributions (Zipf, Normal)
+
+# ── Web Scraping ──────────────────────────────────────────────
+beautifulsoup4==4.12.3       # HTML parsing for competitor scraper
+requests==2.31.0             # HTTP client (used with BS4)
+lxml==5.2.1                  # Faster HTML/XML parser backend for BS4
+
+# ── Snowflake Integration ─────────────────────────────────────
+snowflake-connector-python==3.10.1  # Core Snowflake connector
+snowflake-sqlalchemy==1.6.1         # Optional: SQLAlchemy dialect
+
+# ── dbt (Data Build Tool) ─────────────────────────────────────
+dbt-core==1.8.5              # dbt Core framework
+dbt-snowflake==1.8.3         # Snowflake adapter for dbt
+
+# ── Flask Web Framework ───────────────────────────────────────
+flask==3.0.3                 # Web framework
+flask-caching==2.3.0         # Optional: server-side caching extension
+Werkzeug==3.0.3              # WSGI utilities (Flask dependency)
+
+# ── Google Gemini AI ─────────────────────────────────────────
+google-generativeai==0.7.2   # Gemini API client
+
+# ── Utilities ─────────────────────────────────────────────────
+python-dotenv==1.0.1         # Load .env variables into os.environ
+python-dateutil==2.9.0       # Date parsing utilities
+
+# ── Logging / Dev Tools ───────────────────────────────────────
+colorlog==6.8.2              # Coloured terminal log output
+gunicorn==22.0.0             # Production WSGI server (optional for deployment)

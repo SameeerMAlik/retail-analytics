@@ -1,0 +1,332 @@
+{% extends "base.html" %}
+
+{% block title %}Product Analytics — Enterprise Retail{% endblock %}
+
+{% block page_title %}Product Analytics{% endblock %}
+{% block page_subtitle %}Category performance, margin analysis & competitor pricing intelligence{% endblock %}
+
+{% block content %}
+
+<!-- ── KPI Cards ─────────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-cyan);">
+      <div class="kpi-label">Total Products</div>
+      <div class="kpi-value" id="kpi-total-products">—</div>
+      <div class="kpi-sub">Active SKUs in catalog</div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-purple);">
+      <div class="kpi-label">Avg Gross Margin</div>
+      <div class="kpi-value" id="kpi-avg-margin">—</div>
+      <div class="kpi-sub">Across all categories</div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-green);">
+      <div class="kpi-label">Top Category</div>
+      <div class="kpi-value" id="kpi-top-category">—</div>
+      <div class="kpi-sub">By total revenue</div>
+    </div>
+  </div>
+  <div class="col-xl-3 col-sm-6">
+    <div class="kpi-card" style="border-top-color: var(--accent-orange);">
+      <div class="kpi-label">Price Advantage</div>
+      <div class="kpi-value" id="kpi-price-adv">—</div>
+      <div class="kpi-sub">Products priced below competitor</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Row 1: Category Revenue + Margin by Category ─────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-7">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Revenue by Category</span>
+        <span class="badge bg-cyan-soft">Bar Chart</span>
+      </div>
+      <canvas id="categoryRevenueChart" height="260"></canvas>
+    </div>
+  </div>
+  <div class="col-xl-5">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Margin % by Category</span>
+        <span class="badge bg-purple-soft">Radar</span>
+      </div>
+      <canvas id="marginRadarChart" height="260"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ── Row 2: Top Products Table + Competitor Pricing ─────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-xl-8">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Top 20 Products by Revenue</span>
+        <div class="d-flex gap-2 align-items-center">
+          <select id="categoryFilter" class="form-select form-select-sm" style="width:160px; background:#1a1f35; color:#e2e8f0; border-color:#2d3561;">
+            <option value="">All Categories</option>
+          </select>
+          <span class="badge bg-cyan-soft">DataTable</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table id="productsTable" class="table table-dark table-hover table-sm mb-0">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Product Name</th>
+              <th>Category</th>
+              <th>Revenue</th>
+              <th>Units Sold</th>
+              <th>Margin %</th>
+              <th>vs Competitor</th>
+            </tr>
+          </thead>
+          <tbody id="productsTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-4">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Sales Distribution</span>
+        <span class="badge bg-green-soft">Donut</span>
+      </div>
+      <canvas id="categoryDonutChart" height="280"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ── Row 3: Competitor Price Delta ──────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-12">
+    <div class="chart-card">
+      <div class="chart-header">
+        <span class="chart-title">Competitor Price Intelligence — Our Price vs Competitor</span>
+        <span class="badge bg-orange-soft">Scatter Analysis</span>
+      </div>
+      <canvas id="competitorChart" height="180"></canvas>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// ── Fetch product analytics data ──────────────────────────────
+async function loadProductData() {
+  try {
+    const res = await fetch('/products/api/data');
+    const d   = await res.json();
+    if (d.error) throw new Error(d.error);
+    renderKPIs(d);
+    renderCategoryRevenueChart(d.categories);
+    renderMarginRadar(d.categories);
+    renderDonut(d.categories);
+    renderProductsTable(d.top_products);
+    renderCompetitorChart(d.competitor);
+    populateCategoryFilter(d.categories);
+  } catch (e) {
+    console.error('Product data load error:', e);
+  }
+}
+
+// ── KPI Cards ─────────────────────────────────────────────────
+function renderKPIs(d) {
+  document.getElementById('kpi-total-products').textContent  = d.kpis.total_products.toLocaleString();
+  document.getElementById('kpi-avg-margin').textContent      = d.kpis.avg_margin + '%';
+  document.getElementById('kpi-top-category').textContent    = d.kpis.top_category;
+  document.getElementById('kpi-price-adv').textContent       = d.kpis.price_advantage_count;
+}
+
+// ── Category Revenue Bar Chart ────────────────────────────────
+function renderCategoryRevenueChart(cats) {
+  new Chart(document.getElementById('categoryRevenueChart'), {
+    type: 'bar',
+    data: {
+      labels: cats.map(c => c.category),
+      datasets: [{
+        label: 'Revenue ($)',
+        data: cats.map(c => c.revenue),
+        backgroundColor: [
+          '#00d4ff44','#7c3aed44','#10b98144','#f59e0b44','#ef444444'
+        ],
+        borderColor: ['#00d4ff','#7c3aed','#10b981','#f59e0b','#ef4444'],
+        borderWidth: 2,
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' } },
+        y: {
+          ticks: {
+            color: '#94a3b8',
+            callback: v => '$' + (v/1000).toFixed(0) + 'k'
+          },
+          grid: { color: '#1e293b' }
+        }
+      }
+    }
+  });
+}
+
+// ── Margin Radar Chart ────────────────────────────────────────
+function renderMarginRadar(cats) {
+  new Chart(document.getElementById('marginRadarChart'), {
+    type: 'radar',
+    data: {
+      labels: cats.map(c => c.category),
+      datasets: [{
+        label: 'Margin %',
+        data: cats.map(c => c.avg_margin),
+        backgroundColor: 'rgba(124,58,237,0.25)',
+        borderColor: '#7c3aed',
+        pointBackgroundColor: '#7c3aed',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        r: {
+          angleLines: { color: '#1e293b' },
+          grid:        { color: '#1e293b' },
+          pointLabels: { color: '#94a3b8', font: { size: 11 } },
+          ticks:       { color: '#64748b', backdropColor: 'transparent' }
+        }
+      },
+      plugins: { legend: { labels: { color: '#94a3b8' } } }
+    }
+  });
+}
+
+// ── Category Donut Chart ──────────────────────────────────────
+function renderDonut(cats) {
+  new Chart(document.getElementById('categoryDonutChart'), {
+    type: 'doughnut',
+    data: {
+      labels: cats.map(c => c.category),
+      datasets: [{
+        data: cats.map(c => c.units),
+        backgroundColor: ['#00d4ff','#7c3aed','#10b981','#f59e0b','#ef4444'],
+        borderColor: '#0a0e1a',
+        borderWidth: 3,
+        hoverOffset: 10
+      }]
+    },
+    options: {
+      responsive: true,
+      cutout: '65%',
+      plugins: {
+        legend: { position: 'bottom', labels: { color: '#94a3b8', padding: 16 } }
+      }
+    }
+  });
+}
+
+// ── Products Table ────────────────────────────────────────────
+function renderProductsTable(products) {
+  const tbody = document.getElementById('productsTableBody');
+  tbody.innerHTML = products.map((p, i) => {
+    const delta     = p.competitor_price ? (p.avg_price - p.competitor_price) : null;
+    const deltaHtml = delta !== null
+      ? `<span class="badge ${delta < 0 ? 'bg-success' : 'bg-danger'}">${delta < 0 ? '▼' : '▲'} $${Math.abs(delta).toFixed(2)}</span>`
+      : '<span class="text-muted small">N/A</span>';
+    const marginColor = p.avg_margin >= 40 ? '#10b981' : p.avg_margin >= 25 ? '#f59e0b' : '#ef4444';
+    return `
+      <tr>
+        <td class="text-muted">${i+1}</td>
+        <td>${p.product_name}</td>
+        <td><span class="badge bg-secondary">${p.category}</span></td>
+        <td><strong style="color:var(--accent-cyan)">$${p.revenue.toLocaleString()}</strong></td>
+        <td>${p.units_sold.toLocaleString()}</td>
+        <td><strong style="color:${marginColor}">${p.avg_margin}%</strong></td>
+        <td>${deltaHtml}</td>
+      </tr>`;
+  }).join('');
+}
+
+// ── Competitor Scatter Chart ──────────────────────────────────
+function renderCompetitorChart(comp) {
+  if (!comp || !comp.length) return;
+  const scatter = comp.map(p => ({ x: p.our_price, y: p.competitor_price, label: p.category }));
+  const maxPrice = Math.max(...scatter.map(p => Math.max(p.x, p.y))) + 20;
+
+  new Chart(document.getElementById('competitorChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Products',
+        data: scatter,
+        backgroundColor: '#00d4ff88',
+        borderColor: '#00d4ff',
+        pointRadius: 5,
+        pointHoverRadius: 8
+      }, {
+        // Parity line: y = x
+        label: 'Price Parity',
+        data: [{ x: 0, y: 0 }, { x: maxPrice, y: maxPrice }],
+        type: 'line',
+        borderColor: '#ffffff33',
+        borderDash: [6, 4],
+        borderWidth: 1,
+        pointRadius: 0,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: { labels: { color: '#94a3b8' } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.datasetIndex === 0
+              ? `Our: $${ctx.parsed.x.toFixed(2)} | Comp: $${ctx.parsed.y.toFixed(2)}`
+              : ''
+          }
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Our Price ($)', color: '#94a3b8' },
+          ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' }
+        },
+        y: {
+          title: { display: true, text: 'Competitor Price ($)', color: '#94a3b8' },
+          ticks: { color: '#94a3b8' }, grid: { color: '#1e293b' }
+        }
+      }
+    }
+  });
+}
+
+// ── Category Filter ───────────────────────────────────────────
+function populateCategoryFilter(cats) {
+  const sel = document.getElementById('categoryFilter');
+  cats.forEach(c => {
+    const opt   = document.createElement('option');
+    opt.value   = c.category;
+    opt.textContent = c.category;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change', () => {
+    const val = sel.value;
+    document.querySelectorAll('#productsTableBody tr').forEach(row => {
+      row.style.display = val === '' || row.cells[2].textContent.includes(val) ? '' : 'none';
+    });
+  });
+}
+
+loadProductData();
+</script>
+{% endblock %}

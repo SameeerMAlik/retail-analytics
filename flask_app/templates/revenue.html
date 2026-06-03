@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+{% block title %}Revenue Analytics — RetailIQ{% endblock %}
+{% block page_title %}Revenue Analytics{% endblock %}
+{% block content %}
+
+<div class="row g-3 mb-4">
+    <!-- Revenue Trend Chart -->
+    <div class="col-12">
+        <div class="chart-card fade-in-up">
+            <div class="chart-card-header">
+                <div>
+                    <div class="chart-title">Daily Revenue & Profit — 2024</div>
+                    <div class="chart-subtitle">Full year trend with gross profit overlay</div>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn-cyber btn btn-sm" onclick="toggleDataset(0)">Revenue</button>
+                    <button class="btn-cyber btn btn-sm" onclick="toggleDataset(1)">Profit</button>
+                </div>
+            </div>
+            <canvas id="trendChart" height="120"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- Monthly Table -->
+<div class="row g-3">
+    <div class="col-12">
+        <div class="data-table-card fade-in-up" style="animation-delay:0.2s">
+            <div class="card-header d-flex align-items-center justify-content-between">
+                <span style="font-family:var(--font-display);font-weight:600;">Monthly Breakdown</span>
+                {% if is_demo %}<span class="demo-badge">Demo Data</span>{% endif %}
+            </div>
+            <div class="table-responsive">
+                <table id="monthlyTable" class="table table-hover mb-0">
+                    <thead>
+                        <tr>
+                            <th>Month</th><th>Revenue</th><th>Profit</th>
+                            <th>Orders</th><th>Margin %</th><th>MoM Growth</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthlyBody">
+                        <tr><td colspan="6" class="text-center py-4" style="color:var(--text-muted);">
+                            <span class="spinner-border spinner-border-sm me-2"></span>Loading...
+                        </td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const CHART_DATA = {{ chart_data | tojson }};
+
+// ── Revenue Trend Chart ─────────────────────────────────────
+let trendChart;
+if (CHART_DATA.labels && CHART_DATA.labels.length > 0) {
+    trendChart = new Chart(document.getElementById('trendChart'), {
+        type: 'line',
+        data: {
+            labels: CHART_DATA.labels,
+            datasets: [
+                {
+                    label: 'Net Revenue',
+                    data: CHART_DATA.revenue,
+                    borderColor: 'rgba(0,212,255,0.9)',
+                    backgroundColor: 'rgba(0,212,255,0.05)',
+                    borderWidth: 1.5,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                },
+                {
+                    label: 'Gross Profit',
+                    data: CHART_DATA.profit,
+                    borderColor: 'rgba(16,185,129,0.8)',
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    fill: false,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    borderDash: [4, 3],
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                tooltip: { callbacks: { label: ctx => ` $${ctx.raw.toLocaleString()}` }},
+                legend: { display: true }
+            },
+            scales: {
+                x: { grid: { display: false }, ticks: { maxTicksLimit: 12, maxRotation: 0 }},
+                y: { grid: { color: '#1e2d4a' }, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'k' }}
+            }
+        }
+    });
+} else {
+    // Demo chart
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const demoRevenue = [420000,380000,450000,510000,490000,580000,670000,710000,620000,890000,1250000,980000];
+    const demoProfit  = demoRevenue.map(v => v * 0.33);
+    trendChart = new Chart(document.getElementById('trendChart'), {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [
+                { label: 'Net Revenue (Demo)', data: demoRevenue, backgroundColor: 'rgba(0,212,255,0.2)', borderColor: 'rgba(0,212,255,0.8)', borderWidth: 2, borderRadius: 4 },
+                { label: 'Gross Profit (Demo)', data: demoProfit, backgroundColor: 'rgba(16,185,129,0.2)', borderColor: 'rgba(16,185,129,0.8)', borderWidth: 2, borderRadius: 4 }
+            ]
+        },
+        options: { responsive: true, plugins: { tooltip: { callbacks: { label: ctx => ` $${ctx.raw.toLocaleString()}` }}},
+            scales: { x: { grid: { display: false } }, y: { grid: { color: '#1e2d4a' }, ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'k' }}} }
+    });
+}
+
+function toggleDataset(idx) {
+    if (trendChart) {
+        const ds = trendChart.data.datasets[idx];
+        ds.hidden = !ds.hidden;
+        trendChart.update();
+    }
+}
+
+// ── Load Monthly Table ──────────────────────────────────────
+fetch('/revenue/api/monthly')
+    .then(r => r.json())
+    .then(data => {
+        const tbody = document.getElementById('monthlyBody');
+        if (!data || data.error || data.length === 0) {
+            // Demo data
+            const demo = [
+                {MONTH_NAME:'January',MONTHLY_REVENUE:420000,MONTHLY_PROFIT:138600,MONTHLY_ORDERS:1820,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:null},
+                {MONTH_NAME:'February',MONTHLY_REVENUE:380000,MONTHLY_PROFIT:125400,MONTHLY_ORDERS:1640,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:-9.5},
+                {MONTH_NAME:'March',MONTHLY_REVENUE:450000,MONTHLY_PROFIT:148500,MONTHLY_ORDERS:1950,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:18.4},
+                {MONTH_NAME:'April',MONTHLY_REVENUE:510000,MONTHLY_PROFIT:168300,MONTHLY_ORDERS:2210,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:13.3},
+                {MONTH_NAME:'May',MONTHLY_REVENUE:490000,MONTHLY_PROFIT:161700,MONTHLY_ORDERS:2120,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:-3.9},
+                {MONTH_NAME:'June',MONTHLY_REVENUE:580000,MONTHLY_PROFIT:191400,MONTHLY_ORDERS:2510,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:18.4},
+                {MONTH_NAME:'July',MONTHLY_REVENUE:670000,MONTHLY_PROFIT:221100,MONTHLY_ORDERS:2900,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:15.5},
+                {MONTH_NAME:'August',MONTHLY_REVENUE:710000,MONTHLY_PROFIT:234300,MONTHLY_ORDERS:3075,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:6.0},
+                {MONTH_NAME:'September',MONTHLY_REVENUE:620000,MONTHLY_PROFIT:204600,MONTHLY_ORDERS:2685,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:-12.7},
+                {MONTH_NAME:'October',MONTHLY_REVENUE:890000,MONTHLY_PROFIT:293700,MONTHLY_ORDERS:3855,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:43.5},
+                {MONTH_NAME:'November',MONTHLY_REVENUE:1250000,MONTHLY_PROFIT:412500,MONTHLY_ORDERS:5415,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:40.4},
+                {MONTH_NAME:'December',MONTHLY_REVENUE:980000,MONTHLY_PROFIT:323400,MONTHLY_ORDERS:4245,AVG_MARGIN_PCT:33,MOM_GROWTH_PCT:-21.6},
+            ];
+            renderMonthly(demo);
+        } else {
+            renderMonthly(data);
+        }
+    })
+    .catch(() => { document.getElementById('monthlyBody').innerHTML = '<tr><td colspan="6" class="text-center py-3 text-muted">Could not load data</td></tr>'; });
+
+function renderMonthly(data) {
+    const tbody = document.getElementById('monthlyBody');
+    tbody.innerHTML = data.map(row => {
+        const growth = row.MOM_GROWTH_PCT;
+        const growthHtml = growth === null ? '<span class="text-muted">—</span>'
+            : `<span style="color:${growth >= 0 ? 'var(--accent-green)' : 'var(--accent-red)'};">
+               ${growth >= 0 ? '+' : ''}${growth}%</span>`;
+        return `<tr>
+            <td><strong>${row.MONTH_NAME}</strong></td>
+            <td>$${(row.MONTHLY_REVENUE||0).toLocaleString()}</td>
+            <td>$${(row.MONTHLY_PROFIT || row.TOTAL_PROFIT || 0).toLocaleString()}</td>
+            <td>${(row.MONTHLY_ORDERS || 0).toLocaleString()}</td>
+            <td>${row.AVG_MARGIN_PCT || 0}%</td>
+            <td>${growthHtml}</td>
+        </tr>`;
+    }).join('');
+    $('#monthlyTable').DataTable({ pageLength: 12, order: [] });
+}
+</script>
+{% endblock %}

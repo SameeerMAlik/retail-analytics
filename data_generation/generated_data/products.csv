@@ -1,0 +1,501 @@
+product_id,category,subcategory,product_name,retail_price,base_cost,supplier_name
+PROD00001,Electronics,Smartphones,iPhone 15 Pro,1046.66,681.01,TechSource Global
+PROD00002,Electronics,Smartphones,iPhone 15 Pro v2,933.34,607.28,TechSource Global
+PROD00003,Electronics,Smartphones,iPhone 15 Pro v3,1034.6,673.16,FastShip Logistics
+PROD00004,Electronics,Smartphones,iPhone 15 Pro v4,859.84,559.45,SportsPro Distributors
+PROD00005,Electronics,Smartphones,iPhone 15 Pro v5,984.8,640.76,FashionHub International
+PROD00006,Electronics,Smartphones,iPhone 15 Pro v6,928.53,604.15,FashionHub International
+PROD00007,Electronics,Smartphones,Samsung Galaxy S24,981.12,632.98,BeautyWholesale Co.
+PROD00008,Electronics,Smartphones,Samsung Galaxy S24 v2,885.4,571.23,HomeGoods Direct
+PROD00009,Electronics,Smartphones,Samsung Galaxy S24 v3,898.68,579.79,ValueChain Inc
+PROD00010,Electronics,Smartphones,Samsung Galaxy S24 v4,825.55,532.61,HomeGoods Direct
+PROD00011,Electronics,Smartphones,Google Pixel 8,737.84,475.01,FastShip Logistics
+PROD00012,Electronics,Smartphones,Google Pixel 8 v2,724.6,466.48,ValueChain Inc
+PROD00013,Electronics,Smartphones,Google Pixel 8 v3,662.87,426.74,HomeGoods Direct
+PROD00014,Electronics,Smartphones,Google Pixel 8 v4,698.74,449.83,EliteVendor Ltd
+PROD00015,Electronics,Smartphones,OnePlus 12,618.9,392.62,SportsPro Distributors
+PROD00016,Electronics,Smartphones,OnePlus 12 v2,678.05,430.15,ValueChain Inc
+PROD00017,Electronics,Smartphones,OnePlus 12 v3,665.88,422.43,FastShip Logistics
+PROD00018,Electronics,Smartphones,OnePlus 12 v4,547.65,347.43,BeautyWholesale Co.
+PROD00019,Electronics,Laptops,MacBook Air M3,1368.77,895.66,HomeGoods Direct
+PROD00020,Electronics,Laptops,MacBook Air M3 v2,1415.21,926.04,FastShip Logistics
+PROD00021,Electronics,Laptops,MacBook Air M3 v3,1137.46,744.3,ValueChain Inc
+PROD00022,Electronics,Laptops,Dell XPS 15,1239.19,806.14,FashionHub International
+PROD00023,Electronics,Laptops,Dell XPS 15 v2,1245.99,810.57,EliteVendor Ltd
+PROD00024,Electronics,Laptops,Dell XPS 15 v3,1350.13,878.32,FastShip Logistics
+PROD00025,Electronics,Laptops,Dell XPS 15 v4,1028.31,668.96,FastShip Logistics
+PROD00026,Electronics,Laptops,Dell XPS 15 v5,1313.69,854.61,TechSource Global
+PROD00027,Electronics,Laptops,HP Spectre x360,1020.79,650.18,ValueChain Inc
+PROD00028,Electronics,Laptops,HP Spectre x360 v2,1002.68,638.65,EliteVendor Ltd
+PROD00029,Electronics,Laptops,HP Spectre x360 v3,1172.58,746.87,QualityGoods Asia
+PROD00030,Electronics,Laptops,Lenovo ThinkPad X1,1606.87,1056.7,BeautyWholesale Co.
+PROD00031,Electronics,Laptops,Lenovo ThinkPad X1 v2,1327.36,872.89,HomeGoods Direct
+PROD00032,Electronics,Laptops,Lenovo ThinkPad X1 v3,1267.08,833.25,PrimeSupply Corp
+PROD00033,Electronics,Laptops,Lenovo ThinkPad X1 v4,1441.93,948.23,HomeGoods Direct
+PROD00034,Electronics,Accessories,AirPods Pro,248.14,119.59,HomeGoods Direct
+PROD00035,Electronics,Accessories,AirPods Pro v2,263.16,126.82,QualityGoods Asia
+PROD00036,Electronics,Accessories,AirPods Pro v3,225.05,108.46,HomeGoods Direct
+PROD00037,Electronics,Accessories,AirPods Pro v4,219.26,105.67,PrimeSupply Corp
+PROD00038,Electronics,Accessories,AirPods Pro v5,286.1,137.88,SportsPro Distributors
+PROD00039,Electronics,Accessories,AirPods Pro v6,222.56,107.26,TechSource Global
+PROD00040,Electronics,Accessories,Sony WH-1000XM5,386.11,193.54,ValueChain Inc
+PROD00041,Electronics,Accessories,Sony WH-1000XM5 v2,361.61,181.26,HomeGoods Direct
+PROD00042,Electronics,Accessories,Sony WH-1000XM5 v3,406.98,204.0,QualityGoods Asia
+PROD00043,Electronics,Accessories,USB-C Hub 7-in-1,46.96,17.25,FashionHub International
+PROD00044,Electronics,Accessories,USB-C Hub 7-in-1 v2,52.01,19.1,EliteVendor Ltd
+PROD00045,Electronics,Accessories,USB-C Hub 7-in-1 v3,46.62,17.13,FashionHub International
+PROD00046,Electronics,Accessories,USB-C Hub 7-in-1 v4,47.85,17.58,FastShip Logistics
+PROD00047,Electronics,Accessories,USB-C Hub 7-in-1 v5,47.52,17.45,BeautyWholesale Co.
+PROD00048,Electronics,Accessories,Mechanical Keyboard,165.93,66.82,SportsPro Distributors
+PROD00049,Electronics,Accessories,Mechanical Keyboard v2,135.56,54.59,EliteVendor Ltd
+PROD00050,Electronics,Accessories,Mechanical Keyboard v3,145.7,58.67,TechSource Global
+PROD00051,Electronics,Accessories,Mechanical Keyboard v4,169.09,68.09,PrimeSupply Corp
+PROD00052,Electronics,Accessories,Mechanical Keyboard v5,163.66,65.9,PrimeSupply Corp
+PROD00053,Clothing,Men's Wear,Classic Oxford Shirt,82.35,22.93,EliteVendor Ltd
+PROD00054,Clothing,Men's Wear,Classic Oxford Shirt v2,76.51,21.31,BeautyWholesale Co.
+PROD00055,Clothing,Men's Wear,Classic Oxford Shirt v3,88.64,24.68,QualityGoods Asia
+PROD00056,Clothing,Men's Wear,Classic Oxford Shirt v4,68.71,19.13,FashionHub International
+PROD00057,Clothing,Men's Wear,Slim Fit Chinos,81.32,25.58,HomeGoods Direct
+PROD00058,Clothing,Men's Wear,Slim Fit Chinos v2,93.23,29.33,QualityGoods Asia
+PROD00059,Clothing,Men's Wear,Slim Fit Chinos v3,79.79,25.1,ValueChain Inc
+PROD00060,Clothing,Men's Wear,Wool Blazer,203.95,76.87,FashionHub International
+PROD00061,Clothing,Men's Wear,Wool Blazer v2,201.23,75.84,EliteVendor Ltd
+PROD00062,Clothing,Men's Wear,Wool Blazer v3,188.83,71.17,PrimeSupply Corp
+PROD00063,Clothing,Men's Wear,Graphic Tee Bundle,48.72,12.99,SportsPro Distributors
+PROD00064,Clothing,Men's Wear,Graphic Tee Bundle v2,44.09,11.76,FastShip Logistics
+PROD00065,Clothing,Men's Wear,Graphic Tee Bundle v3,42.84,11.42,FashionHub International
+PROD00066,Clothing,Women's Wear,Floral Maxi Dress,97.76,31.6,EliteVendor Ltd
+PROD00067,Clothing,Women's Wear,Floral Maxi Dress v2,103.42,33.43,PrimeSupply Corp
+PROD00068,Clothing,Women's Wear,Floral Maxi Dress v3,94.7,30.61,ValueChain Inc
+PROD00069,Clothing,Women's Wear,Floral Maxi Dress v4,112.04,36.21,ValueChain Inc
+PROD00070,Clothing,Women's Wear,Floral Maxi Dress v5,86.38,27.92,ValueChain Inc
+PROD00071,Clothing,Women's Wear,Floral Maxi Dress v6,95.41,30.84,EliteVendor Ltd
+PROD00072,Clothing,Women's Wear,High-Rise Jeans,86.49,24.29,HomeGoods Direct
+PROD00073,Clothing,Women's Wear,High-Rise Jeans v2,79.33,22.28,EliteVendor Ltd
+PROD00074,Clothing,Women's Wear,High-Rise Jeans v3,82.99,23.31,BeautyWholesale Co.
+PROD00075,Clothing,Women's Wear,High-Rise Jeans v4,90.93,25.54,ValueChain Inc
+PROD00076,Clothing,Women's Wear,High-Rise Jeans v5,96.82,27.2,PrimeSupply Corp
+PROD00077,Clothing,Women's Wear,High-Rise Jeans v6,93.97,26.4,BeautyWholesale Co.
+PROD00078,Clothing,Women's Wear,Knit Cardigan,77.82,23.64,TechSource Global
+PROD00079,Clothing,Women's Wear,Knit Cardigan v2,84.64,25.71,SportsPro Distributors
+PROD00080,Clothing,Women's Wear,Knit Cardigan v3,88.18,26.79,BeautyWholesale Co.
+PROD00081,Clothing,Women's Wear,Knit Cardigan v4,90.23,27.41,BeautyWholesale Co.
+PROD00082,Clothing,Women's Wear,Silk Blouse,142.61,49.75,HomeGoods Direct
+PROD00083,Clothing,Women's Wear,Silk Blouse v2,126.28,44.05,FashionHub International
+PROD00084,Clothing,Women's Wear,Silk Blouse v3,128.9,44.97,QualityGoods Asia
+PROD00085,Clothing,Footwear,Running Shoes Pro,137.06,51.0,BeautyWholesale Co.
+PROD00086,Clothing,Footwear,Running Shoes Pro v2,115.37,42.93,HomeGoods Direct
+PROD00087,Clothing,Footwear,Running Shoes Pro v3,113.47,42.22,HomeGoods Direct
+PROD00088,Clothing,Footwear,Running Shoes Pro v4,135.96,50.59,HomeGoods Direct
+PROD00089,Clothing,Footwear,Running Shoes Pro v5,147.08,54.73,FashionHub International
+PROD00090,Clothing,Footwear,Leather Ankle Boots,144.3,56.27,FastShip Logistics
+PROD00091,Clothing,Footwear,Leather Ankle Boots v2,139.57,54.42,ValueChain Inc
+PROD00092,Clothing,Footwear,Leather Ankle Boots v3,136.5,53.23,SportsPro Distributors
+PROD00093,Clothing,Footwear,Leather Ankle Boots v4,147.43,57.49,SportsPro Distributors
+PROD00094,Clothing,Footwear,Leather Ankle Boots v5,140.11,54.63,PrimeSupply Corp
+PROD00095,Clothing,Footwear,Leather Ankle Boots v6,139.96,54.58,HomeGoods Direct
+PROD00096,Clothing,Footwear,Canvas Sneakers,69.84,22.27,FastShip Logistics
+PROD00097,Clothing,Footwear,Canvas Sneakers v2,65.42,20.86,FastShip Logistics
+PROD00098,Clothing,Footwear,Canvas Sneakers v3,73.88,23.55,SportsPro Distributors
+PROD00099,Clothing,Footwear,Canvas Sneakers v4,62.13,19.81,FashionHub International
+PROD00100,Clothing,Footwear,Canvas Sneakers v5,59.15,18.86,PrimeSupply Corp
+PROD00101,Clothing,Footwear,Sandals Classic,63.18,19.27,PrimeSupply Corp
+PROD00102,Clothing,Footwear,Sandals Classic v2,51.7,15.77,SportsPro Distributors
+PROD00103,Clothing,Footwear,Sandals Classic v3,55.78,17.02,EliteVendor Ltd
+PROD00104,Clothing,Footwear,Sandals Classic v4,63.1,19.25,BeautyWholesale Co.
+PROD00105,Home & Kitchen,Appliances,Air Fryer XL 5.8Qt,77.4,33.05,QualityGoods Asia
+PROD00106,Home & Kitchen,Appliances,Air Fryer XL 5.8Qt v2,101.36,43.28,ValueChain Inc
+PROD00107,Home & Kitchen,Appliances,Air Fryer XL 5.8Qt v3,93.64,39.98,FashionHub International
+PROD00108,Home & Kitchen,Appliances,Air Fryer XL 5.8Qt v4,99.52,42.49,EliteVendor Ltd
+PROD00109,Home & Kitchen,Appliances,Instant Pot Duo 7-in-1,111.76,50.8,SportsPro Distributors
+PROD00110,Home & Kitchen,Appliances,Instant Pot Duo 7-in-1 v2,106.71,48.51,BeautyWholesale Co.
+PROD00111,Home & Kitchen,Appliances,Instant Pot Duo 7-in-1 v3,97.4,44.27,FashionHub International
+PROD00112,Home & Kitchen,Appliances,Instant Pot Duo 7-in-1 v4,104.99,47.72,BeautyWholesale Co.
+PROD00113,Home & Kitchen,Appliances,Nespresso Vertuo,165.2,69.22,FastShip Logistics
+PROD00114,Home & Kitchen,Appliances,Nespresso Vertuo v2,202.9,85.01,HomeGoods Direct
+PROD00115,Home & Kitchen,Appliances,Nespresso Vertuo v3,169.53,71.03,FashionHub International
+PROD00116,Home & Kitchen,Appliances,Nespresso Vertuo v4,178.18,74.66,EliteVendor Ltd
+PROD00117,Home & Kitchen,Appliances,KitchenAid Stand Mixer,368.82,200.79,HomeGoods Direct
+PROD00118,Home & Kitchen,Appliances,KitchenAid Stand Mixer v2,300.06,163.36,FastShip Logistics
+PROD00119,Home & Kitchen,Appliances,KitchenAid Stand Mixer v3,310.57,169.08,ValueChain Inc
+PROD00120,Home & Kitchen,Appliances,KitchenAid Stand Mixer v4,391.12,212.93,BeautyWholesale Co.
+PROD00121,Home & Kitchen,Cookware,Cast Iron Skillet,53.01,19.47,TechSource Global
+PROD00122,Home & Kitchen,Cookware,Cast Iron Skillet v2,44.2,16.24,FastShip Logistics
+PROD00123,Home & Kitchen,Cookware,Cast Iron Skillet v3,55.34,20.33,PrimeSupply Corp
+PROD00124,Home & Kitchen,Cookware,Cast Iron Skillet v4,48.42,17.79,FastShip Logistics
+PROD00125,Home & Kitchen,Cookware,Cast Iron Skillet v5,47.79,17.56,FashionHub International
+PROD00126,Home & Kitchen,Cookware,Non-stick Pan Set 3pc,77.28,27.39,HomeGoods Direct
+PROD00127,Home & Kitchen,Cookware,Non-stick Pan Set 3pc v2,75.9,26.9,BeautyWholesale Co.
+PROD00128,Home & Kitchen,Cookware,Non-stick Pan Set 3pc v3,81.3,28.81,SportsPro Distributors
+PROD00129,Home & Kitchen,Cookware,"Chef's Knife 8""",100.22,39.41,PrimeSupply Corp
+PROD00130,Home & Kitchen,Cookware,"Chef's Knife 8"" v2",82.29,32.36,EliteVendor Ltd
+PROD00131,Home & Kitchen,Cookware,"Chef's Knife 8"" v3",84.69,33.31,SportsPro Distributors
+PROD00132,Home & Kitchen,Cookware,Bamboo Cutting Board,32.66,10.14,EliteVendor Ltd
+PROD00133,Home & Kitchen,Cookware,Bamboo Cutting Board v2,25.62,7.95,SportsPro Distributors
+PROD00134,Home & Kitchen,Cookware,Bamboo Cutting Board v3,28.25,8.77,BeautyWholesale Co.
+PROD00135,Home & Kitchen,Cookware,Bamboo Cutting Board v4,32.03,9.94,FashionHub International
+PROD00136,Home & Kitchen,Décor,LED Floor Lamp,60.73,19.36,TechSource Global
+PROD00137,Home & Kitchen,Décor,LED Floor Lamp v2,65.25,20.8,SportsPro Distributors
+PROD00138,Home & Kitchen,Décor,LED Floor Lamp v3,63.34,20.2,TechSource Global
+PROD00139,Home & Kitchen,Décor,LED Floor Lamp v4,68.67,21.9,SportsPro Distributors
+PROD00140,Home & Kitchen,Décor,LED Floor Lamp v5,66.57,21.22,FashionHub International
+PROD00141,Home & Kitchen,Décor,LED Floor Lamp v6,61.28,19.54,BeautyWholesale Co.
+PROD00142,Home & Kitchen,Décor,Throw Pillow Set 4pc,50.22,15.32,ValueChain Inc
+PROD00143,Home & Kitchen,Décor,Throw Pillow Set 4pc v2,63.48,19.37,PrimeSupply Corp
+PROD00144,Home & Kitchen,Décor,Throw Pillow Set 4pc v3,67.2,20.5,FashionHub International
+PROD00145,Home & Kitchen,Décor,Throw Pillow Set 4pc v4,53.23,16.24,QualityGoods Asia
+PROD00146,Home & Kitchen,Décor,Throw Pillow Set 4pc v5,64.12,19.56,ValueChain Inc
+PROD00147,Home & Kitchen,Décor,Throw Pillow Set 4pc v6,55.51,16.93,TechSource Global
+PROD00148,Home & Kitchen,Décor,Wall Art Canvas 3pc,81.89,25.91,QualityGoods Asia
+PROD00149,Home & Kitchen,Décor,Wall Art Canvas 3pc v2,70.48,22.3,ValueChain Inc
+PROD00150,Home & Kitchen,Décor,Wall Art Canvas 3pc v3,77.25,24.45,HomeGoods Direct
+PROD00151,Home & Kitchen,Décor,Wall Art Canvas 3pc v4,87.39,27.66,BeautyWholesale Co.
+PROD00152,Home & Kitchen,Décor,Wall Art Canvas 3pc v5,69.26,21.92,EliteVendor Ltd
+PROD00153,Home & Kitchen,Décor,Wall Art Canvas 3pc v6,71.17,22.52,SportsPro Distributors
+PROD00154,Home & Kitchen,Décor,Scented Candle Gift Set,40.36,12.42,FashionHub International
+PROD00155,Home & Kitchen,Décor,Scented Candle Gift Set v2,40.69,12.52,QualityGoods Asia
+PROD00156,Home & Kitchen,Décor,Scented Candle Gift Set v3,39.61,12.19,QualityGoods Asia
+PROD00157,Sports & Outdoors,Fitness,Resistance Band Set,31.12,8.58,FastShip Logistics
+PROD00158,Sports & Outdoors,Fitness,Resistance Band Set v2,28.0,7.72,BeautyWholesale Co.
+PROD00159,Sports & Outdoors,Fitness,Resistance Band Set v3,28.93,7.98,BeautyWholesale Co.
+PROD00160,Sports & Outdoors,Fitness,Resistance Band Set v4,24.77,6.83,FashionHub International
+PROD00161,Sports & Outdoors,Fitness,Resistance Band Set v5,29.94,8.26,HomeGoods Direct
+PROD00162,Sports & Outdoors,Fitness,Yoga Mat Premium,46.71,15.25,FashionHub International
+PROD00163,Sports & Outdoors,Fitness,Yoga Mat Premium v2,48.31,15.77,PrimeSupply Corp
+PROD00164,Sports & Outdoors,Fitness,Yoga Mat Premium v3,46.45,15.17,TechSource Global
+PROD00165,Sports & Outdoors,Fitness,Yoga Mat Premium v4,45.48,14.85,FashionHub International
+PROD00166,Sports & Outdoors,Fitness,Yoga Mat Premium v5,48.04,15.69,BeautyWholesale Co.
+PROD00167,Sports & Outdoors,Fitness,Adjustable Dumbbells,201.48,86.06,BeautyWholesale Co.
+PROD00168,Sports & Outdoors,Fitness,Adjustable Dumbbells v2,172.07,73.5,ValueChain Inc
+PROD00169,Sports & Outdoors,Fitness,Adjustable Dumbbells v3,221.27,94.51,HomeGoods Direct
+PROD00170,Sports & Outdoors,Fitness,Adjustable Dumbbells v4,219.62,93.81,QualityGoods Asia
+PROD00171,Sports & Outdoors,Fitness,Pull-up Bar Doorway,36.44,13.08,QualityGoods Asia
+PROD00172,Sports & Outdoors,Fitness,Pull-up Bar Doorway v2,38.04,13.66,ValueChain Inc
+PROD00173,Sports & Outdoors,Fitness,Pull-up Bar Doorway v3,40.55,14.56,ValueChain Inc
+PROD00174,Sports & Outdoors,Fitness,Pull-up Bar Doorway v4,36.59,13.14,BeautyWholesale Co.
+PROD00175,Sports & Outdoors,Fitness,Pull-up Bar Doorway v5,34.67,12.44,TechSource Global
+PROD00176,Sports & Outdoors,Outdoor,Hiking Backpack 45L,144.19,56.13,EliteVendor Ltd
+PROD00177,Sports & Outdoors,Outdoor,Hiking Backpack 45L v2,156.92,61.08,TechSource Global
+PROD00178,Sports & Outdoors,Outdoor,Hiking Backpack 45L v3,136.4,53.09,PrimeSupply Corp
+PROD00179,Sports & Outdoors,Outdoor,Hiking Backpack 45L v4,155.54,60.55,HomeGoods Direct
+PROD00180,Sports & Outdoors,Outdoor,Hiking Backpack 45L v5,149.32,58.12,FastShip Logistics
+PROD00181,Sports & Outdoors,Outdoor,Camping Tent 4-Person,180.48,74.37,SportsPro Distributors
+PROD00182,Sports & Outdoors,Outdoor,Camping Tent 4-Person v2,178.02,73.35,ValueChain Inc
+PROD00183,Sports & Outdoors,Outdoor,Camping Tent 4-Person v3,228.36,94.1,QualityGoods Asia
+PROD00184,Sports & Outdoors,Outdoor,Camping Tent 4-Person v4,199.7,82.29,BeautyWholesale Co.
+PROD00185,Sports & Outdoors,Outdoor,Trekking Poles Pair,77.97,27.12,FastShip Logistics
+PROD00186,Sports & Outdoors,Outdoor,Trekking Poles Pair v2,73.13,25.43,PrimeSupply Corp
+PROD00187,Sports & Outdoors,Outdoor,Trekking Poles Pair v3,71.43,24.85,FashionHub International
+PROD00188,Sports & Outdoors,Outdoor,Trekking Poles Pair v4,76.69,26.67,QualityGoods Asia
+PROD00189,Sports & Outdoors,Outdoor,Hydration Pack 2L,57.39,19.46,FastShip Logistics
+PROD00190,Sports & Outdoors,Outdoor,Hydration Pack 2L v2,56.56,19.17,EliteVendor Ltd
+PROD00191,Sports & Outdoors,Outdoor,Hydration Pack 2L v3,62.6,21.22,ValueChain Inc
+PROD00192,Sports & Outdoors,Outdoor,Hydration Pack 2L v4,52.77,17.89,PrimeSupply Corp
+PROD00193,Sports & Outdoors,Outdoor,Hydration Pack 2L v5,62.76,21.28,BeautyWholesale Co.
+PROD00194,Sports & Outdoors,Outdoor,Hydration Pack 2L v6,54.16,18.36,EliteVendor Ltd
+PROD00195,Sports & Outdoors,Team Sports,Basketball Pro,47.84,17.57,HomeGoods Direct
+PROD00196,Sports & Outdoors,Team Sports,Basketball Pro v2,49.04,18.01,FashionHub International
+PROD00197,Sports & Outdoors,Team Sports,Basketball Pro v3,42.78,15.71,FashionHub International
+PROD00198,Sports & Outdoors,Team Sports,Basketball Pro v4,55.84,20.51,EliteVendor Ltd
+PROD00199,Sports & Outdoors,Team Sports,Soccer Ball Match,43.23,15.52,PrimeSupply Corp
+PROD00200,Sports & Outdoors,Team Sports,Soccer Ball Match v2,40.13,14.41,PrimeSupply Corp
+PROD00201,Sports & Outdoors,Team Sports,Soccer Ball Match v3,37.21,13.36,SportsPro Distributors
+PROD00202,Sports & Outdoors,Team Sports,Soccer Ball Match v4,40.23,14.44,PrimeSupply Corp
+PROD00203,Sports & Outdoors,Team Sports,Soccer Ball Match v5,42.59,15.29,EliteVendor Ltd
+PROD00204,Sports & Outdoors,Team Sports,Tennis Racket Graphite,89.07,35.03,HomeGoods Direct
+PROD00205,Sports & Outdoors,Team Sports,Tennis Racket Graphite v2,91.85,36.12,FastShip Logistics
+PROD00206,Sports & Outdoors,Team Sports,Tennis Racket Graphite v3,86.68,34.09,TechSource Global
+PROD00207,Sports & Outdoors,Team Sports,Tennis Racket Graphite v4,91.85,36.12,QualityGoods Asia
+PROD00208,Sports & Outdoors,Team Sports,Tennis Racket Graphite v5,94.44,37.14,FastShip Logistics
+PROD00209,Sports & Outdoors,Team Sports,Badminton Set 4-Player,42.64,15.16,BeautyWholesale Co.
+PROD00210,Sports & Outdoors,Team Sports,Badminton Set 4-Player v2,39.89,14.18,ValueChain Inc
+PROD00211,Sports & Outdoors,Team Sports,Badminton Set 4-Player v3,41.01,14.58,ValueChain Inc
+PROD00212,Sports & Outdoors,Team Sports,Badminton Set 4-Player v4,42.29,15.04,SportsPro Distributors
+PROD00213,Sports & Outdoors,Team Sports,Badminton Set 4-Player v5,39.4,14.01,ValueChain Inc
+PROD00214,Beauty & Health,Skincare,Vitamin C Serum 30ml,45.52,11.15,FashionHub International
+PROD00215,Beauty & Health,Skincare,Vitamin C Serum 30ml v2,46.89,11.48,BeautyWholesale Co.
+PROD00216,Beauty & Health,Skincare,Vitamin C Serum 30ml v3,52.27,12.8,TechSource Global
+PROD00217,Beauty & Health,Skincare,SPF 50 Sunscreen,28.67,7.91,EliteVendor Ltd
+PROD00218,Beauty & Health,Skincare,SPF 50 Sunscreen v2,25.93,7.15,HomeGoods Direct
+PROD00219,Beauty & Health,Skincare,SPF 50 Sunscreen v3,29.44,8.12,PrimeSupply Corp
+PROD00220,Beauty & Health,Skincare,SPF 50 Sunscreen v4,28.95,7.99,TechSource Global
+PROD00221,Beauty & Health,Skincare,SPF 50 Sunscreen v5,27.34,7.54,PrimeSupply Corp
+PROD00222,Beauty & Health,Skincare,SPF 50 Sunscreen v6,26.03,7.18,QualityGoods Asia
+PROD00223,Beauty & Health,Skincare,Hyaluronic Acid Moisturizer,44.75,12.62,TechSource Global
+PROD00224,Beauty & Health,Skincare,Hyaluronic Acid Moisturizer v2,35.5,10.01,BeautyWholesale Co.
+PROD00225,Beauty & Health,Skincare,Hyaluronic Acid Moisturizer v3,43.92,12.39,EliteVendor Ltd
+PROD00226,Beauty & Health,Skincare,Hyaluronic Acid Moisturizer v4,37.6,10.61,SportsPro Distributors
+PROD00227,Beauty & Health,Skincare,Hyaluronic Acid Moisturizer v5,33.73,9.51,QualityGoods Asia
+PROD00228,Beauty & Health,Skincare,Hyaluronic Acid Moisturizer v6,42.39,11.95,QualityGoods Asia
+PROD00229,Beauty & Health,Skincare,Retinol Night Cream,55.82,17.03,TechSource Global
+PROD00230,Beauty & Health,Skincare,Retinol Night Cream v2,60.47,18.45,EliteVendor Ltd
+PROD00231,Beauty & Health,Skincare,Retinol Night Cream v3,62.61,19.1,PrimeSupply Corp
+PROD00232,Beauty & Health,Skincare,Retinol Night Cream v4,63.72,19.44,FashionHub International
+PROD00233,Beauty & Health,Skincare,Retinol Night Cream v5,61.15,18.66,BeautyWholesale Co.
+PROD00234,Beauty & Health,Skincare,Retinol Night Cream v6,50.56,15.42,HomeGoods Direct
+PROD00235,Beauty & Health,Haircare,Dyson Airwrap,559.55,298.93,EliteVendor Ltd
+PROD00236,Beauty & Health,Haircare,Dyson Airwrap v2,527.58,281.84,TechSource Global
+PROD00237,Beauty & Health,Haircare,Dyson Airwrap v3,558.02,298.11,FashionHub International
+PROD00238,Beauty & Health,Haircare,Dyson Airwrap v4,598.82,319.91,FastShip Logistics
+PROD00239,Beauty & Health,Haircare,Keratin Treatment Kit,80.51,28.53,HomeGoods Direct
+PROD00240,Beauty & Health,Haircare,Keratin Treatment Kit v2,68.4,24.24,HomeGoods Direct
+PROD00241,Beauty & Health,Haircare,Keratin Treatment Kit v3,86.65,30.71,FashionHub International
+PROD00242,Beauty & Health,Haircare,Keratin Treatment Kit v4,85.09,30.16,SportsPro Distributors
+PROD00243,Beauty & Health,Haircare,Argan Oil Shampoo Set,38.31,11.92,ValueChain Inc
+PROD00244,Beauty & Health,Haircare,Argan Oil Shampoo Set v2,47.54,14.79,TechSource Global
+PROD00245,Beauty & Health,Haircare,Argan Oil Shampoo Set v3,39.11,12.17,FashionHub International
+PROD00246,Beauty & Health,Haircare,Scalp Massager,18.66,4.91,QualityGoods Asia
+PROD00247,Beauty & Health,Haircare,Scalp Massager v2,17.16,4.51,ValueChain Inc
+PROD00248,Beauty & Health,Haircare,Scalp Massager v3,16.46,4.33,PrimeSupply Corp
+PROD00249,Beauty & Health,Haircare,Scalp Massager v4,21.85,5.75,PrimeSupply Corp
+PROD00250,Beauty & Health,Haircare,Scalp Massager v5,16.87,4.44,QualityGoods Asia
+PROD00251,Beauty & Health,Supplements,Whey Protein 5lb,62.44,23.28,TechSource Global
+PROD00252,Beauty & Health,Supplements,Whey Protein 5lb v2,54.62,20.37,QualityGoods Asia
+PROD00253,Beauty & Health,Supplements,Whey Protein 5lb v3,56.26,20.98,BeautyWholesale Co.
+PROD00254,Beauty & Health,Supplements,Whey Protein 5lb v4,55.7,20.77,FastShip Logistics
+PROD00255,Beauty & Health,Supplements,Omega-3 Fish Oil 90ct,27.12,8.42,EliteVendor Ltd
+PROD00256,Beauty & Health,Supplements,Omega-3 Fish Oil 90ct v2,26.67,8.28,SportsPro Distributors
+PROD00257,Beauty & Health,Supplements,Omega-3 Fish Oil 90ct v3,31.81,9.87,SportsPro Distributors
+PROD00258,Beauty & Health,Supplements,Omega-3 Fish Oil 90ct v4,31.41,9.75,FastShip Logistics
+PROD00259,Beauty & Health,Supplements,Omega-3 Fish Oil 90ct v5,29.38,9.12,BeautyWholesale Co.
+PROD00260,Beauty & Health,Supplements,Vitamin D3 2000IU,18.1,4.76,ValueChain Inc
+PROD00261,Beauty & Health,Supplements,Vitamin D3 2000IU v2,21.39,5.63,SportsPro Distributors
+PROD00262,Beauty & Health,Supplements,Vitamin D3 2000IU v3,20.21,5.32,FastShip Logistics
+PROD00263,Beauty & Health,Supplements,Vitamin D3 2000IU v4,17.29,4.55,TechSource Global
+PROD00264,Beauty & Health,Supplements,Vitamin D3 2000IU v5,19.34,5.09,BeautyWholesale Co.
+PROD00265,Beauty & Health,Supplements,Vitamin D3 2000IU v6,16.66,4.38,TechSource Global
+PROD00266,Beauty & Health,Supplements,Magnesium Glycinate,24.42,6.84,TechSource Global
+PROD00267,Beauty & Health,Supplements,Magnesium Glycinate v2,24.29,6.8,BeautyWholesale Co.
+PROD00268,Beauty & Health,Supplements,Magnesium Glycinate v3,26.21,7.34,BeautyWholesale Co.
+PROD00269,Beauty & Health,General,Synergized mobile synergy,34.89,76.4,ValueChain Inc
+PROD00270,Clothing,General,Business-focused intermediate success,439.1,61.68,FashionHub International
+PROD00271,Sports & Outdoors,General,Horizontal foreground function,346.18,149.16,SportsPro Distributors
+PROD00272,Clothing,General,Polarized multi-tasking utilization,153.08,139.02,SportsPro Distributors
+PROD00273,Electronics,General,Expanded object-oriented synergy,479.2,142.19,QualityGoods Asia
+PROD00274,Electronics,General,Streamlined non-volatile adapter,280.32,164.47,FashionHub International
+PROD00275,Beauty & Health,General,Grass-roots optimal leverage,92.41,161.16,TechSource Global
+PROD00276,Sports & Outdoors,General,Robust transitional array,337.6,115.95,SportsPro Distributors
+PROD00277,Electronics,General,Ameliorated disintermediate analyzer,271.12,78.36,FastShip Logistics
+PROD00278,Electronics,General,Upgradable demand-driven definition,342.45,133.98,TechSource Global
+PROD00279,Beauty & Health,General,Phased optimizing portal,404.17,186.16,HomeGoods Direct
+PROD00280,Clothing,General,Customizable impactful archive,460.43,113.64,EliteVendor Ltd
+PROD00281,Beauty & Health,General,Profound full-range structure,344.76,182.42,HomeGoods Direct
+PROD00282,Home & Kitchen,General,Adaptive cohesive pricing structure,233.12,177.14,SportsPro Distributors
+PROD00283,Home & Kitchen,General,Persistent impactful intranet,220.2,57.73,FashionHub International
+PROD00284,Electronics,General,Business-focused zero-defect interface,308.78,137.91,PrimeSupply Corp
+PROD00285,Home & Kitchen,General,Function-based executive ability,456.31,93.01,HomeGoods Direct
+PROD00286,Beauty & Health,General,Right-sized demand-driven task-force,204.49,120.41,ValueChain Inc
+PROD00287,Sports & Outdoors,General,Assimilated tangible system engine,93.83,162.41,HomeGoods Direct
+PROD00288,Clothing,General,Intuitive mission-critical intranet,258.57,56.17,ValueChain Inc
+PROD00289,Clothing,General,Optimized transitional projection,42.93,18.71,PrimeSupply Corp
+PROD00290,Beauty & Health,General,Cross-group explicit access,51.52,67.55,ValueChain Inc
+PROD00291,Electronics,General,Networked optimal support,306.73,9.6,SportsPro Distributors
+PROD00292,Beauty & Health,General,Distributed hybrid adapter,342.32,154.59,HomeGoods Direct
+PROD00293,Beauty & Health,General,Balanced grid-enabled forecast,449.07,125.06,ValueChain Inc
+PROD00294,Home & Kitchen,General,Distributed next generation instruction set,129.24,190.4,FashionHub International
+PROD00295,Electronics,General,Extended grid-enabled matrix,200.73,145.0,SportsPro Distributors
+PROD00296,Clothing,General,Grass-roots 5thgeneration open architecture,118.34,106.34,QualityGoods Asia
+PROD00297,Sports & Outdoors,General,Profit-focused stable Graphical User Interface,485.54,67.39,SportsPro Distributors
+PROD00298,Home & Kitchen,General,Customer-focused leadingedge function,277.02,15.23,HomeGoods Direct
+PROD00299,Home & Kitchen,General,Fundamental exuding frame,294.59,81.29,ValueChain Inc
+PROD00300,Beauty & Health,General,Compatible dynamic task-force,356.59,50.92,FastShip Logistics
+PROD00301,Home & Kitchen,General,Progressive needs-based capacity,280.7,146.29,HomeGoods Direct
+PROD00302,Electronics,General,Intuitive needs-based projection,50.61,137.62,FashionHub International
+PROD00303,Home & Kitchen,General,Enterprise-wide uniform encryption,344.1,64.03,BeautyWholesale Co.
+PROD00304,Beauty & Health,General,Vision-oriented stable hardware,426.87,100.8,HomeGoods Direct
+PROD00305,Electronics,General,Mandatory client-server infrastructure,231.59,16.1,FashionHub International
+PROD00306,Beauty & Health,General,Focused logistical database,429.91,95.92,SportsPro Distributors
+PROD00307,Clothing,General,Fully-configurable national throughput,97.48,145.9,QualityGoods Asia
+PROD00308,Sports & Outdoors,General,Centralized human-resource task-force,174.18,124.4,HomeGoods Direct
+PROD00309,Home & Kitchen,General,Cross-platform modular matrices,392.03,150.9,ValueChain Inc
+PROD00310,Beauty & Health,General,Secured radical migration,131.93,19.52,SportsPro Distributors
+PROD00311,Clothing,General,Re-contextualized 6thgeneration forecast,18.02,58.49,TechSource Global
+PROD00312,Clothing,General,Virtual demand-driven monitoring,325.35,30.59,FashionHub International
+PROD00313,Electronics,General,Team-oriented background application,493.82,182.27,ValueChain Inc
+PROD00314,Sports & Outdoors,General,Advanced hybrid data-warehouse,98.58,71.61,QualityGoods Asia
+PROD00315,Home & Kitchen,General,Customer-focused 24hour functionalities,496.87,177.5,FashionHub International
+PROD00316,Clothing,General,Right-sized responsive support,224.19,95.35,TechSource Global
+PROD00317,Sports & Outdoors,General,Visionary heuristic algorithm,384.88,88.14,SportsPro Distributors
+PROD00318,Clothing,General,Persistent zero tolerance initiative,355.44,160.37,HomeGoods Direct
+PROD00319,Home & Kitchen,General,Decentralized eco-centric ability,65.19,80.49,EliteVendor Ltd
+PROD00320,Beauty & Health,General,Synchronized empowering migration,317.15,38.99,HomeGoods Direct
+PROD00321,Sports & Outdoors,General,Optimized motivating Local Area Network,153.55,36.27,SportsPro Distributors
+PROD00322,Clothing,General,Customizable stable Internet solution,161.9,117.54,PrimeSupply Corp
+PROD00323,Beauty & Health,General,Right-sized analyzing matrices,100.89,126.4,PrimeSupply Corp
+PROD00324,Sports & Outdoors,General,Front-line directional open architecture,469.32,82.56,FashionHub International
+PROD00325,Beauty & Health,General,Digitized bi-directional approach,477.88,121.6,PrimeSupply Corp
+PROD00326,Beauty & Health,General,Right-sized contextually-based application,30.95,179.76,ValueChain Inc
+PROD00327,Home & Kitchen,General,Balanced regional benchmark,439.28,19.64,BeautyWholesale Co.
+PROD00328,Sports & Outdoors,General,Customizable even-keeled portal,191.77,45.57,QualityGoods Asia
+PROD00329,Sports & Outdoors,General,Up-sized multi-tasking portal,425.3,152.28,FastShip Logistics
+PROD00330,Clothing,General,Devolved bifurcated software,184.19,86.4,BeautyWholesale Co.
+PROD00331,Beauty & Health,General,Multi-tiered next generation hardware,186.64,88.54,BeautyWholesale Co.
+PROD00332,Sports & Outdoors,General,Ameliorated object-oriented migration,226.93,118.79,PrimeSupply Corp
+PROD00333,Sports & Outdoors,General,Robust even-keeled Local Area Network,250.76,5.87,FashionHub International
+PROD00334,Beauty & Health,General,Secured content-based pricing structure,212.31,76.24,TechSource Global
+PROD00335,Sports & Outdoors,General,Programmable secondary definition,240.02,147.29,ValueChain Inc
+PROD00336,Sports & Outdoors,General,Synchronized human-resource extranet,462.84,173.54,FashionHub International
+PROD00337,Electronics,General,Object-based real-time access,196.42,130.03,PrimeSupply Corp
+PROD00338,Beauty & Health,General,Self-enabling intangible productivity,81.61,199.56,PrimeSupply Corp
+PROD00339,Sports & Outdoors,General,Customizable 24/7 pricing structure,258.99,5.54,HomeGoods Direct
+PROD00340,Sports & Outdoors,General,Optimized 5thgeneration definition,142.24,191.7,QualityGoods Asia
+PROD00341,Beauty & Health,General,Focused multi-state superstructure,188.2,170.38,FastShip Logistics
+PROD00342,Electronics,General,Distributed zero-defect task-force,395.8,63.38,EliteVendor Ltd
+PROD00343,Sports & Outdoors,General,Digitized systemic database,422.04,140.06,EliteVendor Ltd
+PROD00344,Clothing,General,Reactive responsive strategy,261.0,157.53,HomeGoods Direct
+PROD00345,Beauty & Health,General,Down-sized contextually-based encoding,195.07,144.63,FashionHub International
+PROD00346,Sports & Outdoors,General,Multi-layered didactic knowledgebase,83.98,95.61,TechSource Global
+PROD00347,Clothing,General,Intuitive fresh-thinking service-desk,28.39,124.84,HomeGoods Direct
+PROD00348,Home & Kitchen,General,Proactive client-driven Local Area Network,99.77,40.97,SportsPro Distributors
+PROD00349,Beauty & Health,General,Team-oriented 5thgeneration groupware,21.07,118.27,BeautyWholesale Co.
+PROD00350,Home & Kitchen,General,Seamless clear-thinking system engine,354.47,79.54,HomeGoods Direct
+PROD00351,Sports & Outdoors,General,Sharable foreground algorithm,198.35,68.22,FashionHub International
+PROD00352,Home & Kitchen,General,Streamlined asymmetric moratorium,263.08,56.39,QualityGoods Asia
+PROD00353,Electronics,General,Self-enabling national intranet,167.83,24.02,ValueChain Inc
+PROD00354,Home & Kitchen,General,Distributed 6thgeneration installation,148.76,151.99,FastShip Logistics
+PROD00355,Beauty & Health,General,Seamless impactful hierarchy,131.59,197.04,PrimeSupply Corp
+PROD00356,Clothing,General,Visionary leadingedge methodology,450.32,198.03,SportsPro Distributors
+PROD00357,Home & Kitchen,General,Open-architected mobile superstructure,257.61,133.85,ValueChain Inc
+PROD00358,Beauty & Health,General,Visionary maximized moratorium,319.25,122.57,ValueChain Inc
+PROD00359,Electronics,General,Profit-focused methodical capability,225.13,72.75,PrimeSupply Corp
+PROD00360,Beauty & Health,General,Ergonomic 24/7 migration,360.47,32.91,FastShip Logistics
+PROD00361,Sports & Outdoors,General,Self-enabling eco-centric middleware,331.35,67.73,HomeGoods Direct
+PROD00362,Electronics,General,Expanded real-time methodology,292.1,13.61,FastShip Logistics
+PROD00363,Electronics,General,De-engineered 24hour analyzer,255.82,63.88,ValueChain Inc
+PROD00364,Sports & Outdoors,General,Object-based tertiary interface,135.97,17.34,FashionHub International
+PROD00365,Home & Kitchen,General,Extended clear-thinking process improvement,448.44,87.54,SportsPro Distributors
+PROD00366,Sports & Outdoors,General,Managed interactive migration,427.55,115.08,ValueChain Inc
+PROD00367,Electronics,General,Re-contextualized needs-based implementation,465.72,15.49,TechSource Global
+PROD00368,Home & Kitchen,General,Multi-channeled leadingedge function,341.19,151.51,ValueChain Inc
+PROD00369,Sports & Outdoors,General,Profit-focused zero administration parallelism,323.03,24.89,QualityGoods Asia
+PROD00370,Home & Kitchen,General,Virtual zero-defect encryption,44.87,170.14,PrimeSupply Corp
+PROD00371,Beauty & Health,General,Open-architected maximized productivity,253.01,156.43,SportsPro Distributors
+PROD00372,Home & Kitchen,General,Ameliorated intermediate synergy,456.87,198.45,PrimeSupply Corp
+PROD00373,Beauty & Health,General,Cloned non-volatile standardization,371.67,37.77,TechSource Global
+PROD00374,Home & Kitchen,General,User-friendly modular help-desk,94.01,136.8,BeautyWholesale Co.
+PROD00375,Electronics,General,Advanced 24hour data-warehouse,440.06,41.46,EliteVendor Ltd
+PROD00376,Home & Kitchen,General,Progressive asynchronous workforce,146.65,12.03,QualityGoods Asia
+PROD00377,Beauty & Health,General,Up-sized exuding project,229.83,68.26,TechSource Global
+PROD00378,Home & Kitchen,General,Centralized eco-centric database,165.75,70.25,FashionHub International
+PROD00379,Beauty & Health,General,Realigned needs-based ability,38.36,44.99,PrimeSupply Corp
+PROD00380,Sports & Outdoors,General,Cross-group heuristic database,383.18,196.37,QualityGoods Asia
+PROD00381,Beauty & Health,General,Cloned heuristic ability,497.72,133.19,TechSource Global
+PROD00382,Sports & Outdoors,General,Advanced web-enabled hierarchy,59.95,135.73,ValueChain Inc
+PROD00383,Home & Kitchen,General,Team-oriented national database,69.68,153.29,FashionHub International
+PROD00384,Clothing,General,Multi-layered static core,411.32,56.2,FastShip Logistics
+PROD00385,Clothing,General,Innovative system-worthy moratorium,199.24,122.18,PrimeSupply Corp
+PROD00386,Beauty & Health,General,Inverse solution-oriented open architecture,417.44,109.93,HomeGoods Direct
+PROD00387,Sports & Outdoors,General,Implemented zero tolerance contingency,239.57,17.01,EliteVendor Ltd
+PROD00388,Beauty & Health,General,Managed full-range infrastructure,315.4,30.62,HomeGoods Direct
+PROD00389,Sports & Outdoors,General,Cloned even-keeled architecture,305.54,132.98,PrimeSupply Corp
+PROD00390,Sports & Outdoors,General,User-centric leadingedge model,288.23,135.92,BeautyWholesale Co.
+PROD00391,Beauty & Health,General,Innovative didactic website,28.88,177.85,FastShip Logistics
+PROD00392,Clothing,General,Organized human-resource algorithm,256.21,29.26,TechSource Global
+PROD00393,Clothing,General,Cross-platform zero-defect model,360.15,74.05,FashionHub International
+PROD00394,Clothing,General,User-friendly dedicated contingency,28.16,126.66,BeautyWholesale Co.
+PROD00395,Home & Kitchen,General,Vision-oriented heuristic matrices,496.46,143.15,EliteVendor Ltd
+PROD00396,Beauty & Health,General,Synergistic object-oriented migration,68.19,190.54,QualityGoods Asia
+PROD00397,Clothing,General,Decentralized tangible info-mediaries,356.39,122.18,SportsPro Distributors
+PROD00398,Beauty & Health,General,Right-sized heuristic standardization,182.85,128.78,EliteVendor Ltd
+PROD00399,Clothing,General,Synchronized web-enabled emulation,114.19,74.91,FastShip Logistics
+PROD00400,Home & Kitchen,General,Stand-alone high-level collaboration,302.24,21.58,FastShip Logistics
+PROD00401,Sports & Outdoors,General,Fundamental systematic success,446.94,108.11,TechSource Global
+PROD00402,Electronics,General,Open-source well-modulated parallelism,287.16,22.27,FashionHub International
+PROD00403,Electronics,General,Ergonomic web-enabled software,364.62,50.56,QualityGoods Asia
+PROD00404,Beauty & Health,General,Optimized actuating firmware,173.01,135.36,HomeGoods Direct
+PROD00405,Clothing,General,Virtual transitional contingency,112.99,56.86,HomeGoods Direct
+PROD00406,Home & Kitchen,General,Inverse object-oriented paradigm,54.55,181.52,TechSource Global
+PROD00407,Sports & Outdoors,General,Ameliorated empowering support,440.97,153.6,HomeGoods Direct
+PROD00408,Sports & Outdoors,General,Synergized systematic strategy,259.06,155.52,EliteVendor Ltd
+PROD00409,Clothing,General,Adaptive asymmetric pricing structure,134.16,104.43,ValueChain Inc
+PROD00410,Electronics,General,Front-line object-oriented utilization,423.21,146.31,SportsPro Distributors
+PROD00411,Clothing,General,Intuitive upward-trending workforce,98.75,14.85,FastShip Logistics
+PROD00412,Clothing,General,Realigned object-oriented migration,102.81,15.56,BeautyWholesale Co.
+PROD00413,Beauty & Health,General,Configurable tertiary synergy,157.46,163.75,SportsPro Distributors
+PROD00414,Home & Kitchen,General,Profound upward-trending frame,69.42,100.71,FastShip Logistics
+PROD00415,Electronics,General,Front-line transitional contingency,216.46,54.81,PrimeSupply Corp
+PROD00416,Sports & Outdoors,General,Grass-roots fault-tolerant toolset,69.03,152.98,BeautyWholesale Co.
+PROD00417,Clothing,General,Multi-lateral modular structure,339.28,71.44,ValueChain Inc
+PROD00418,Beauty & Health,General,Integrated discrete function,23.27,142.14,HomeGoods Direct
+PROD00419,Beauty & Health,General,Streamlined contextually-based functionalities,157.91,30.96,FashionHub International
+PROD00420,Sports & Outdoors,General,Reverse-engineered heuristic product,36.2,29.26,SportsPro Distributors
+PROD00421,Electronics,General,Compatible cohesive collaboration,130.7,100.98,BeautyWholesale Co.
+PROD00422,Clothing,General,Realigned impactful task-force,139.86,48.71,TechSource Global
+PROD00423,Home & Kitchen,General,Reduced full-range circuit,373.35,97.23,HomeGoods Direct
+PROD00424,Home & Kitchen,General,Reduced well-modulated structure,358.0,129.63,QualityGoods Asia
+PROD00425,Clothing,General,Face-to-face user-facing success,123.14,184.74,FastShip Logistics
+PROD00426,Electronics,General,Self-enabling motivating complexity,127.83,102.66,HomeGoods Direct
+PROD00427,Electronics,General,Customer-focused actuating Internet solution,54.62,176.32,HomeGoods Direct
+PROD00428,Beauty & Health,General,Distributed national implementation,478.65,139.33,ValueChain Inc
+PROD00429,Sports & Outdoors,General,Reactive grid-enabled challenge,283.22,199.86,EliteVendor Ltd
+PROD00430,Clothing,General,Cross-platform systemic analyzer,54.45,80.15,QualityGoods Asia
+PROD00431,Electronics,General,Balanced tertiary knowledgebase,322.43,86.33,TechSource Global
+PROD00432,Beauty & Health,General,Face-to-face global policy,81.4,25.63,HomeGoods Direct
+PROD00433,Home & Kitchen,General,Automated asynchronous customer loyalty,19.78,168.75,EliteVendor Ltd
+PROD00434,Sports & Outdoors,General,Enterprise-wide upward-trending productivity,152.97,129.16,PrimeSupply Corp
+PROD00435,Clothing,General,Multi-channeled maximized adapter,203.6,166.49,HomeGoods Direct
+PROD00436,Electronics,General,Stand-alone well-modulated framework,381.83,52.82,PrimeSupply Corp
+PROD00437,Electronics,General,Horizontal attitude-oriented utilization,322.0,24.58,SportsPro Distributors
+PROD00438,Home & Kitchen,General,Fundamental multimedia circuit,139.3,123.12,FastShip Logistics
+PROD00439,Beauty & Health,General,Distributed even-keeled system engine,173.22,120.03,ValueChain Inc
+PROD00440,Electronics,General,Expanded 3rdgeneration contingency,423.3,107.7,FastShip Logistics
+PROD00441,Beauty & Health,General,Mandatory reciprocal Graphic Interface,466.24,55.03,BeautyWholesale Co.
+PROD00442,Beauty & Health,General,Profit-focused multi-state open architecture,149.83,120.79,HomeGoods Direct
+PROD00443,Home & Kitchen,General,Multi-lateral fresh-thinking intranet,157.95,169.32,TechSource Global
+PROD00444,Home & Kitchen,General,Expanded radical definition,252.41,158.44,BeautyWholesale Co.
+PROD00445,Clothing,General,Robust mobile flexibility,344.26,92.31,PrimeSupply Corp
+PROD00446,Sports & Outdoors,General,Down-sized scalable initiative,127.0,55.14,TechSource Global
+PROD00447,Home & Kitchen,General,Adaptive needs-based help-desk,409.45,68.48,BeautyWholesale Co.
+PROD00448,Home & Kitchen,General,Multi-channeled 6thgeneration challenge,140.42,87.03,PrimeSupply Corp
+PROD00449,Sports & Outdoors,General,Switchable hybrid complexity,165.09,18.3,BeautyWholesale Co.
+PROD00450,Home & Kitchen,General,Virtual holistic utilization,92.62,31.25,FastShip Logistics
+PROD00451,Beauty & Health,General,Reverse-engineered reciprocal budgetary management,274.06,160.46,BeautyWholesale Co.
+PROD00452,Sports & Outdoors,General,Future-proofed well-modulated service-desk,169.23,8.35,FastShip Logistics
+PROD00453,Beauty & Health,General,Virtual disintermediate throughput,126.23,9.85,SportsPro Distributors
+PROD00454,Electronics,General,Intuitive didactic utilization,245.69,113.83,HomeGoods Direct
+PROD00455,Electronics,General,Re-engineered high-level policy,130.23,121.21,SportsPro Distributors
+PROD00456,Sports & Outdoors,General,Intuitive incremental portal,355.91,125.4,QualityGoods Asia
+PROD00457,Home & Kitchen,General,Decentralized maximized complexity,141.41,47.66,SportsPro Distributors
+PROD00458,Sports & Outdoors,General,Advanced methodical approach,250.17,179.61,HomeGoods Direct
+PROD00459,Sports & Outdoors,General,Fully-configurable intermediate standardization,372.84,199.73,BeautyWholesale Co.
+PROD00460,Clothing,General,Pre-emptive regional open architecture,94.17,27.54,PrimeSupply Corp
+PROD00461,Electronics,General,Profit-focused radical toolset,362.54,171.1,SportsPro Distributors
+PROD00462,Home & Kitchen,General,Expanded methodical core,382.28,41.28,QualityGoods Asia
+PROD00463,Clothing,General,Networked directional application,102.51,195.06,QualityGoods Asia
+PROD00464,Clothing,General,Cross-platform grid-enabled projection,36.13,63.02,FashionHub International
+PROD00465,Beauty & Health,General,Enterprise-wide methodical matrices,249.26,47.22,QualityGoods Asia
+PROD00466,Electronics,General,Exclusive maximized forecast,472.34,15.13,EliteVendor Ltd
+PROD00467,Clothing,General,Universal needs-based utilization,93.18,121.17,ValueChain Inc
+PROD00468,Beauty & Health,General,Cross-group bottom-line monitoring,337.06,113.33,QualityGoods Asia
+PROD00469,Sports & Outdoors,General,Innovative even-keeled moratorium,116.72,191.43,HomeGoods Direct
+PROD00470,Electronics,General,Proactive national paradigm,496.23,108.54,FastShip Logistics
+PROD00471,Clothing,General,Ameliorated heuristic collaboration,484.32,94.71,PrimeSupply Corp
+PROD00472,Beauty & Health,General,Re-engineered bandwidth-monitored moratorium,447.88,158.19,EliteVendor Ltd
+PROD00473,Clothing,General,Horizontal explicit application,92.17,22.08,ValueChain Inc
+PROD00474,Home & Kitchen,General,Re-contextualized 3rdgeneration approach,403.05,155.33,PrimeSupply Corp
+PROD00475,Electronics,General,Down-sized global workforce,367.72,113.57,PrimeSupply Corp
+PROD00476,Beauty & Health,General,Inverse multi-state knowledgebase,288.5,139.37,FastShip Logistics
+PROD00477,Electronics,General,Profound coherent Graphic Interface,270.97,182.83,ValueChain Inc
+PROD00478,Beauty & Health,General,Persistent dedicated budgetary management,146.08,114.47,QualityGoods Asia
+PROD00479,Beauty & Health,General,Extended 3rdgeneration conglomeration,129.05,31.31,TechSource Global
+PROD00480,Sports & Outdoors,General,Diverse 4thgeneration emulation,138.78,44.09,ValueChain Inc
+PROD00481,Home & Kitchen,General,Organized well-modulated encryption,179.61,163.1,SportsPro Distributors
+PROD00482,Clothing,General,Self-enabling grid-enabled framework,152.64,137.05,FashionHub International
+PROD00483,Beauty & Health,General,Balanced zero tolerance hierarchy,230.73,126.96,BeautyWholesale Co.
+PROD00484,Electronics,General,Sharable discrete customer loyalty,416.9,174.98,SportsPro Distributors
+PROD00485,Clothing,General,Synergized systemic extranet,156.15,59.02,SportsPro Distributors
+PROD00486,Electronics,General,Vision-oriented 24hour website,434.96,124.52,FashionHub International
+PROD00487,Sports & Outdoors,General,Cross-platform intangible focus group,124.11,78.36,SportsPro Distributors
+PROD00488,Clothing,General,Synergized logistical moratorium,157.29,49.35,FastShip Logistics
+PROD00489,Sports & Outdoors,General,Upgradable high-level secured line,385.98,38.29,BeautyWholesale Co.
+PROD00490,Sports & Outdoors,General,Centralized tertiary instruction set,258.82,168.61,TechSource Global
+PROD00491,Sports & Outdoors,General,Automated regional success,72.63,31.4,HomeGoods Direct
+PROD00492,Home & Kitchen,General,Focused dedicated methodology,255.44,163.18,ValueChain Inc
+PROD00493,Sports & Outdoors,General,Cloned regional monitoring,468.25,197.01,TechSource Global
+PROD00494,Clothing,General,Multi-tiered heuristic middleware,162.09,26.74,FastShip Logistics
+PROD00495,Clothing,General,Intuitive asynchronous adapter,243.32,36.75,BeautyWholesale Co.
+PROD00496,Home & Kitchen,General,De-engineered tertiary standardization,330.95,75.19,TechSource Global
+PROD00497,Sports & Outdoors,General,User-friendly asymmetric superstructure,201.19,118.67,FashionHub International
+PROD00498,Home & Kitchen,General,Horizontal impactful Graphic Interface,84.52,181.67,SportsPro Distributors
+PROD00499,Electronics,General,Fundamental national benchmark,58.66,155.97,QualityGoods Asia
+PROD00500,Sports & Outdoors,General,Re-contextualized zero administration secured line,260.77,74.58,EliteVendor Ltd

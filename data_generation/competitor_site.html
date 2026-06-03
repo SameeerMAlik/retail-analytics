@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CompeteX Store — Competitor Price List</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f8f8f8; padding: 20px; }
+        h1 { color: #c0392b; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th { background: #c0392b; color: white; padding: 10px; }
+        td { padding: 10px; border: 1px solid #ddd; }
+        tr:nth-child(even) { background: #f5f5f5; }
+        .price { font-weight: bold; color: #27ae60; }
+    </style>
+</head>
+<body>
+<h1>CompeteX — Our Best Prices</h1>
+<p>Updated: 2024-12-01</p>
+
+<h2>Electronics</h2>
+<table class="product-table" id="electronics">
+    <thead>
+        <tr><th>Product Name</th><th>Category</th><th>Our Price</th><th>Stock</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>iPhone 15 Pro</td><td>Smartphones</td><td class="price">$949.00</td><td>In Stock</td></tr>
+        <tr><td>Samsung Galaxy S24</td><td>Smartphones</td><td class="price">$849.00</td><td>In Stock</td></tr>
+        <tr><td>Google Pixel 8</td><td>Smartphones</td><td class="price">$649.00</td><td>In Stock</td></tr>
+        <tr><td>MacBook Air M3</td><td>Laptops</td><td class="price">$1,249.00</td><td>In Stock</td></tr>
+        <tr><td>Dell XPS 15</td><td>Laptops</td><td class="price">$1,149.00</td><td>Limited</td></tr>
+        <tr><td>HP Spectre x360</td><td>Laptops</td><td class="price">$1,049.00</td><td>In Stock</td></tr>
+        <tr><td>AirPods Pro</td><td>Accessories</td><td class="price">$229.00</td><td>In Stock</td></tr>
+        <tr><td>Sony WH-1000XM5</td><td>Accessories</td><td class="price">$369.00</td><td>In Stock</td></tr>
+        <tr><td>Mechanical Keyboard</td><td>Accessories</td><td class="price">$139.00</td><td>In Stock</td></tr>
+        <tr><td>USB-C Hub 7-in-1</td><td>Accessories</td><td class="price">$44.00</td><td>In Stock</td></tr>
+        <tr><td>Lenovo ThinkPad X1</td><td>Laptops</td><td class="price">$1,329.00</td><td>In Stock</td></tr>
+        <tr><td>OnePlus 12</td><td>Smartphones</td><td class="price">$549.00</td><td>In Stock</td></tr>
+    </tbody>
+</table>
+
+<h2>Clothing</h2>
+<table class="product-table" id="clothing">
+    <thead>
+        <tr><th>Product Name</th><th>Category</th><th>Our Price</th><th>Stock</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Classic Oxford Shirt</td><td>Men's Wear</td><td class="price">$72.00</td><td>In Stock</td></tr>
+        <tr><td>Slim Fit Chinos</td><td>Men's Wear</td><td class="price">$79.00</td><td>In Stock</td></tr>
+        <tr><td>Wool Blazer</td><td>Men's Wear</td><td class="price">$185.00</td><td>In Stock</td></tr>
+        <tr><td>Floral Maxi Dress</td><td>Women's Wear</td><td class="price">$89.00</td><td>In Stock</td></tr>
+        <tr><td>High-Rise Jeans</td><td>Women's Wear</td><td class="price">$82.00</td><td>In Stock</td></tr>
+        <tr><td>Silk Blouse</td><td>Women's Wear</td><td class="price">$119.00</td><td>Limited</td></tr>
+        <tr><td>Running Shoes Pro</td><td>Footwear</td><td class="price">$119.00</td><td>In Stock</td></tr>
+        <tr><td>Leather Ankle Boots</td><td>Footwear</td><td class="price">$149.00</td><td>In Stock</td></tr>
+        <tr><td>Canvas Sneakers</td><td>Footwear</td><td class="price">$62.00</td><td>In Stock</td></tr>
+    </tbody>
+</table>
+
+<h2>Home & Kitchen</h2>
+<table class="product-table" id="home-kitchen">
+    <thead>
+        <tr><th>Product Name</th><th>Category</th><th>Our Price</th><th>Stock</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Air Fryer XL 5.8Qt</td><td>Appliances</td><td class="price">$79.00</td><td>In Stock</td></tr>
+        <tr><td>Instant Pot Duo 7-in-1</td><td>Appliances</td><td class="price">$89.00</td><td>In Stock</td></tr>
+        <tr><td>KitchenAid Stand Mixer</td><td>Appliances</td><td class="price">$329.00</td><td>Limited</td></tr>
+        <tr><td>Nespresso Vertuo</td><td>Appliances</td><td class="price">$169.00</td><td>In Stock</td></tr>
+        <tr><td>Cast Iron Skillet</td><td>Cookware</td><td class="price">$44.00</td><td>In Stock</td></tr>
+        <tr><td>Non-stick Pan Set 3pc</td><td>Cookware</td><td class="price">$72.00</td><td>In Stock</td></tr>
+        <tr><td>Chef's Knife 8"</td><td>Cookware</td><td class="price">$82.00</td><td>In Stock</td></tr>
+    </tbody>
+</table>
+
+<h2>Sports & Outdoors</h2>
+<table class="product-table" id="sports">
+    <thead>
+        <tr><th>Product Name</th><th>Category</th><th>Our Price</th><th>Stock</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Adjustable Dumbbells</td><td>Fitness</td><td class="price">$179.00</td><td>In Stock</td></tr>
+        <tr><td>Yoga Mat Premium</td><td>Fitness</td><td class="price">$44.00</td><td>In Stock</td></tr>
+        <tr><td>Resistance Band Set</td><td>Fitness</td><td class="price">$26.00</td><td>In Stock</td></tr>
+        <tr><td>Hiking Backpack 45L</td><td>Outdoor</td><td class="price">$139.00</td><td>In Stock</td></tr>
+        <tr><td>Camping Tent 4-Person</td><td>Outdoor</td><td class="price">$185.00</td><td>Limited</td></tr>
+        <tr><td>Trekking Poles Pair</td><td>Outdoor</td><td class="price">$62.00</td><td>In Stock</td></tr>
+        <tr><td>Tennis Racket Graphite</td><td>Team Sports</td><td class="price">$82.00</td><td>In Stock</td></tr>
+        <tr><td>Basketball Pro</td><td>Team Sports</td><td class="price">$44.00</td><td>In Stock</td></tr>
+    </tbody>
+</table>
+
+<h2>Beauty & Health</h2>
+<table class="product-table" id="beauty">
+    <thead>
+        <tr><th>Product Name</th><th>Category</th><th>Our Price</th><th>Stock</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>Dyson Airwrap</td><td>Haircare</td><td class="price">$569.00</td><td>Limited</td></tr>
+        <tr><td>Vitamin C Serum 30ml</td><td>Skincare</td><td class="price">$44.00</td><td>In Stock</td></tr>
+        <tr><td>SPF 50 Sunscreen</td><td>Skincare</td><td class="price">$26.00</td><td>In Stock</td></tr>
+        <tr><td>Hyaluronic Acid Moisturizer</td><td>Skincare</td><td class="price">$35.00</td><td>In Stock</td></tr>
+        <tr><td>Whey Protein 5lb</td><td>Supplements</td><td class="price">$54.00</td><td>In Stock</td></tr>
+        <tr><td>Omega-3 Fish Oil 90ct</td><td>Supplements</td><td class="price">$26.00</td><td>In Stock</td></tr>
+        <tr><td>Keratin Treatment Kit</td><td>Haircare</td><td class="price">$72.00</td><td>In Stock</td></tr>
+    </tbody>
+</table>
+
+</body>
+</html>

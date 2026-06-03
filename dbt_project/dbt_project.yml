@@ -1,0 +1,59 @@
+name: 'retail_analytics'
+version: '1.0.0'
+config-version: 2
+
+# Snowflake profile defined in ~/.dbt/profiles.yml
+profile: 'retail_analytics'
+
+# Directory structure
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+# Target schema
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+# ─── Materialization Strategy ─────────────────────────────────
+models:
+  retail_analytics:
+    staging:
+      # Views: lightweight, always fresh, no storage cost
+      +materialized: view
+      +schema: staging
+      +tags: ["staging", "raw"]
+
+    marts:
+      # Tables: persisted, used by Flask dashboard & reports
+      +materialized: table
+      +schema: analytics
+      +tags: ["mart", "star_schema"]
+
+    analytics:
+      # Tables: pre-aggregated analytics for dashboard speed
+      +materialized: table
+      +schema: analytics
+      +tags: ["analytics", "aggregated"]
+
+# ─── Global Variables ─────────────────────────────────────────
+vars:
+  start_date: '2024-01-01'
+  end_date:   '2024-12-31'
+  project_name: 'Enterprise Retail Analytics Engine'
+
+# ─── Seeds (static reference data) ───────────────────────────
+seeds:
+  retail_analytics:
+    +schema: seeds
+
+# ─── Snapshots ────────────────────────────────────────────────
+snapshots:
+  retail_analytics:
+    +target_schema: snapshots
+    +strategy: timestamp
+    +updated_at: _LOADED_AT

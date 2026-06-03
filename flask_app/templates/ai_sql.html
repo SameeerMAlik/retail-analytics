@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+
+{% block title %}Ask Your Data — RetailIQ Analytics{% endblock %}
+{% block page_title %}Ask Your Data <span style="color:var(--accent-purple);font-size:0.7em;">AI Powered</span>{% endblock %}
+
+{% block content %}
+
+<div class="row g-4">
+
+    <!-- ── Left: Input Panel ──────────────────────────────── -->
+    <div class="col-xl-4">
+        <div class="ai-input-container" style="position:sticky;top:80px;">
+
+            <!-- AI Status -->
+            <div class="d-flex align-items-center gap-2 mb-4 pb-3" style="border-bottom:1px solid var(--border);">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#7c3aed,#4f46e5);border-radius:10px;display:flex;align-items:center;justify-content:center;">
+                    <i class="bi bi-stars" style="color:#fff;font-size:1rem;"></i>
+                </div>
+                <div>
+                    <div style="font-family:var(--font-display);font-weight:600;font-size:0.95rem;">Gemini SQL Assistant</div>
+                    <div style="font-size:0.72rem;color:var(--text-muted);">
+                        {% if ai_available %}
+                        <span class="text-success"><i class="bi bi-circle-fill me-1" style="font-size:0.45rem;"></i>Connected</span>
+                        {% else %}
+                        <span style="color:var(--accent-orange);"><i class="bi bi-circle-fill me-1" style="font-size:0.45rem;"></i>Demo Mode</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Input -->
+            <div class="mb-3">
+                <label style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;display:block;">
+                    Your Question
+                </label>
+                <textarea id="questionInput" class="ai-input-field" rows="4"
+                    placeholder="e.g. Show top 10 customers by revenue in Q4 2024..."></textarea>
+            </div>
+
+            <button id="generateBtn" class="btn-cyber-fill btn w-100 mb-4" onclick="generateSQL()">
+                <i class="bi bi-stars me-2"></i> Generate SQL & Run
+            </button>
+
+            <!-- Example Questions -->
+            <div>
+                <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">
+                    Try these examples
+                </div>
+                <div class="d-flex flex-column gap-1">
+                    {% for q in example_questions %}
+                    <button class="text-start btn btn-sm py-2 px-3 example-q" onclick="setQuestion(this)"
+                            style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-muted);font-size:0.82rem;border-radius:6px;transition:all 0.2s;">
+                        <i class="bi bi-chat-dots me-2" style="color:var(--accent-purple);"></i>{{ q }}
+                    </button>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Schema Info -->
+            <div class="mt-4 pt-4" style="border-top:1px solid var(--border);">
+                <div style="font-size:0.72rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">
+                    Available Tables
+                </div>
+                {% for tbl in ['FCT_SALES','DIM_CUSTOMER','DIM_PRODUCT','DAILY_REVENUE_TRENDS','CUSTOMER_LIFETIME_VALUE','TOP_PRODUCT_CATEGORIES'] %}
+                <div class="d-flex align-items-center gap-2 mb-1" style="font-size:0.78rem;">
+                    <i class="bi bi-table" style="color:var(--accent-cyan);font-size:0.7rem;"></i>
+                    <span style="font-family:monospace;color:var(--text-muted);">{{ tbl }}</span>
+                </div>
+                {% endfor %}
+                <div class="mt-2" style="font-size:0.72rem;color:var(--text-muted);">
+                    <i class="bi bi-shield-check me-1 text-success"></i>
+                    Only SELECT queries are permitted
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Right: Results Panel ───────────────────────────── -->
+    <div class="col-xl-8">
+
+        <!-- Loading State -->
+        <div id="loadingState" style="display:none;" class="chart-card text-center py-5">
+            <div class="mb-3" style="font-size:3rem;">
+                <div class="spinner-border" style="color:var(--accent-purple);width:3rem;height:3rem;" role="status"></div>
+            </div>
+            <div style="font-family:var(--font-display);font-size:1rem;color:var(--text-muted);">
+                Generating SQL with Gemini AI...
+            </div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-top:6px;">
+                Analyzing your schema context
+            </div>
+        </div>
+
+        <!-- Initial State -->
+        <div id="initialState" class="chart-card text-center" style="padding:60px 40px;">
+            <div style="font-size:4rem;margin-bottom:16px;opacity:0.4;">
+                <i class="bi bi-stars" style="color:var(--accent-purple);"></i>
+            </div>
+            <div style="font-family:var(--font-display);font-size:1.2rem;color:var(--text-primary);margin-bottom:8px;">
+                Natural Language Analytics
+            </div>
+            <div style="font-size:0.88rem;color:var(--text-muted);max-width:400px;margin:0 auto;">
+                Ask any business question in plain English. Gemini AI will generate
+                the Snowflake SQL and execute it automatically.
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" style="display:none;" class="chart-card">
+            <div class="d-flex align-items-start gap-3">
+                <i class="bi bi-exclamation-triangle-fill" style="color:var(--accent-red);font-size:1.5rem;"></i>
+                <div>
+                    <div style="font-family:var(--font-display);font-weight:600;color:var(--accent-red);margin-bottom:4px;">
+                        Query Error
+                    </div>
+                    <div id="errorMessage" style="font-size:0.88rem;color:var(--text-muted);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results State -->
+        <div id="resultsState" style="display:none;">
+            <!-- Generated SQL -->
+            <div class="chart-card mb-3">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <div>
+                        <div class="chart-title">
+                            <i class="bi bi-code-slash me-2" style="color:var(--accent-cyan);"></i>Generated SQL
+                        </div>
+                        <div class="chart-subtitle">Powered by Google Gemini 1.5 Flash</div>
+                    </div>
+                    <button class="btn-cyber btn btn-sm" onclick="copySQL()">
+                        <i class="bi bi-clipboard me-1"></i> Copy
+                    </button>
+                </div>
+                <pre id="generatedSQL" class="sql-output"></pre>
+            </div>
+
+            <!-- Results Table -->
+            <div class="data-table-card">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div>
+                        <span style="font-family:var(--font-display);font-weight:600;font-size:0.9rem;">Query Results</span>
+                        <span id="rowCount" class="ms-2" style="font-size:0.78rem;color:var(--text-muted);"></span>
+                    </div>
+                    <button class="btn-cyber btn btn-sm" onclick="exportCSV()">
+                        <i class="bi bi-download me-1"></i> Export CSV
+                    </button>
+                </div>
+                <div class="table-responsive">
+                    <table id="resultsTable" class="table table-hover mb-0">
+                        <thead id="resultsHead"></thead>
+                        <tbody id="resultsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentData = { columns: [], rows: [] };
+let dtInstance = null;
+
+function setQuestion(btn) {
+    document.getElementById('questionInput').value = btn.textContent.trim().replace('', '').trim();
+    // Highlight selected
+    document.querySelectorAll('.example-q').forEach(b => b.style.borderColor = 'var(--border)');
+    btn.style.borderColor = 'rgba(124,58,237,0.5)';
+    btn.style.color = 'var(--text-primary)';
+}
+
+async function generateSQL() {
+    const question = document.getElementById('questionInput').value.trim();
+    if (!question) {
+        alert('Please enter a question.');
+        return;
+    }
+
+    // Show loading
+    document.getElementById('initialState').style.display  = 'none';
+    document.getElementById('errorState').style.display    = 'none';
+    document.getElementById('resultsState').style.display  = 'none';
+    document.getElementById('loadingState').style.display  = 'block';
+
+    const btn = document.getElementById('generateBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Generating...';
+
+    try {
+        const resp = await fetch('/ai/generate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ question })
+        });
+        const data = await resp.json();
+
+        document.getElementById('loadingState').style.display = 'none';
+
+        if (data.error && !data.sql) {
+            document.getElementById('errorState').style.display = 'block';
+            document.getElementById('errorMessage').textContent = data.error;
+            return;
+        }
+
+        // Show results
+        document.getElementById('resultsState').style.display = 'block';
+        document.getElementById('generatedSQL').textContent   = data.sql || '';
+
+        currentData = { columns: data.columns || [], rows: data.rows || [] };
+
+        const count = data.count || 0;
+        let countText = `${count.toLocaleString()} row${count !== 1 ? 's' : ''}`;
+        if (data.truncated) countText += ' (truncated to 500)';
+        document.getElementById('rowCount').textContent = countText;
+
+        renderTable(data.columns, data.rows);
+
+        // Show execution error as a warning (SQL was generated but query failed)
+        if (data.error) {
+            document.getElementById('errorState').style.display = 'block';
+            document.getElementById('errorMessage').textContent  = data.error;
+        }
+
+    } catch (err) {
+        document.getElementById('loadingState').style.display = 'none';
+        document.getElementById('errorState').style.display   = 'block';
+        document.getElementById('errorMessage').textContent   = 'Network error: ' + err.message;
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="bi bi-stars me-2"></i> Generate SQL & Run';
+    }
+}
+
+function renderTable(columns, rows) {
+    // Destroy existing DataTable
+    if (dtInstance) { dtInstance.destroy(); dtInstance = null; }
+
+    const thead = document.getElementById('resultsHead');
+    const tbody = document.getElementById('resultsBody');
+
+    // Build header
+    thead.innerHTML = '<tr>' + columns.map(c => `<th>${c}</th>`).join('') + '</tr>';
+
+    // Build body
+    tbody.innerHTML = rows.map(row =>
+        '<tr>' + row.map(cell => {
+            const val = cell === null ? '<span class="text-muted">NULL</span>' : cell;
+            return `<td>${val}</td>`;
+        }).join('') + '</tr>'
+    ).join('');
+
+    // Initialize DataTable
+    if (rows.length > 0) {
+        dtInstance = $('#resultsTable').DataTable({
+            pageLength: 15,
+            language: { search: 'Filter:' },
+            order: [],
+        });
+    }
+}
+
+function copySQL() {
+    const sql = document.getElementById('generatedSQL').textContent;
+    navigator.clipboard.writeText(sql).then(() => {
+        const btn = event.target.closest('button');
+        const orig = btn.innerHTML;
+        btn.innerHTML = '<i class="bi bi-check me-1"></i> Copied!';
+        setTimeout(() => btn.innerHTML = orig, 2000);
+    });
+}
+
+function exportCSV() {
+    if (!currentData.columns.length) return;
+    const rows = [currentData.columns.join(',')].concat(
+        currentData.rows.map(r => r.map(c => `"${c}"`).join(','))
+    );
+    const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a'); a.href = url;
+    a.download = 'query_results.csv'; a.click();
+    URL.revokeObjectURL(url);
+}
+
+// Allow Enter + Ctrl to submit
+document.getElementById('questionInput').addEventListener('keydown', e => {
+    if (e.ctrlKey && e.key === 'Enter') generateSQL();
+});
+</script>
+{% endblock %}

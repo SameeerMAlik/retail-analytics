@@ -1,0 +1,39 @@
+# dbt profiles.yml — Snowflake connection configuration
+# ─────────────────────────────────────────────────────────────────
+# Place this file at: ~/.dbt/profiles.yml
+# Do NOT store this inside the project repo (add to .gitignore)
+#
+# Documentation: https://docs.getdbt.com/docs/core/connect-data-platform/snowflake-setup
+# ─────────────────────────────────────────────────────────────────
+
+retail_analytics:          # Must match the 'profile' key in dbt_project.yml
+  target: dev              # Default target to use (dev / prod)
+  outputs:
+
+    # ── Development environment ──────────────────────────────────
+    dev:
+      type: snowflake
+      account: "{{ env_var('SF_ACCOUNT') }}"          # e.g. xy12345.us-east-1
+      user:    "{{ env_var('SF_USER') }}"
+      password: "{{ env_var('SF_PASSWORD') }}"
+      role:     "{{ env_var('SF_ROLE', 'SYSADMIN') }}"
+      warehouse: "{{ env_var('SF_WAREHOUSE', 'COMPUTE_WH') }}"
+      database: "{{ env_var('SF_DATABASE', 'RETAIL_ANALYTICS_DB') }}"
+      schema:   DBT_DEV                               # Development schema — won't touch ANALYTICS
+      threads:  4                                     # Parallel model builds
+      client_session_keep_alive: false
+      query_tag: dbt_dev_retail_analytics             # Shows in Snowflake query history
+
+    # ── Production environment ───────────────────────────────────
+    prod:
+      type: snowflake
+      account: "{{ env_var('SF_ACCOUNT') }}"
+      user:    "{{ env_var('SF_USER') }}"
+      password: "{{ env_var('SF_PASSWORD') }}"
+      role:     "{{ env_var('SF_ROLE', 'SYSADMIN') }}"
+      warehouse: "{{ env_var('SF_WAREHOUSE', 'COMPUTE_WH') }}"
+      database: "{{ env_var('SF_DATABASE', 'RETAIL_ANALYTICS_DB') }}"
+      schema:   ANALYTICS                             # Production schema
+      threads:  8
+      client_session_keep_alive: false
+      query_tag: dbt_prod_retail_analytics

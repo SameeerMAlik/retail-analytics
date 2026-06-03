@@ -1,0 +1,225 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard — RetailIQ Analytics{% endblock %}
+{% block page_title %}Executive Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- ── KPI Cards ──────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="kpi-card cyan fade-in-up">
+            <div class="kpi-label">Total Revenue</div>
+            <div class="kpi-value" style="font-size:1.6rem;">{{ kpi.total_revenue }}</div>
+            <div class="kpi-icon"><i class="bi bi-currency-dollar"></i></div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="kpi-card purple fade-in-up" style="animation-delay:0.05s">
+            <div class="kpi-label">Total Orders</div>
+            <div class="kpi-value" style="font-size:1.6rem;">{{ kpi.total_orders }}</div>
+            <div class="kpi-icon"><i class="bi bi-cart3"></i></div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="kpi-card green fade-in-up" style="animation-delay:0.1s">
+            <div class="kpi-label">Active Customers</div>
+            <div class="kpi-value" style="font-size:1.6rem;">{{ kpi.active_customers }}</div>
+            <div class="kpi-icon"><i class="bi bi-people"></i></div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="kpi-card orange fade-in-up" style="animation-delay:0.15s">
+            <div class="kpi-label">Avg Margin</div>
+            <div class="kpi-value" style="font-size:1.6rem;">{{ kpi.avg_margin }}</div>
+            <div class="kpi-icon"><i class="bi bi-pie-chart"></i></div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="kpi-card red fade-in-up" style="animation-delay:0.2s">
+            <div class="kpi-label">Avg Order Value</div>
+            <div class="kpi-value" style="font-size:1.6rem;">{{ kpi.aov }}</div>
+            <div class="kpi-icon"><i class="bi bi-receipt"></i></div>
+        </div>
+    </div>
+    <div class="col-xl-2 col-md-4 col-6">
+        <div class="kpi-card cyan fade-in-up" style="animation-delay:0.25s; border-color: rgba(124,58,237,0.3);">
+            <div class="kpi-label">dbt Models</div>
+            <div class="kpi-value" style="font-size:1.6rem; color: #a78bfa;">12</div>
+            <div class="kpi-icon" style="color:#7c3aed;"><i class="bi bi-cpu"></i></div>
+        </div>
+    </div>
+</div>
+
+<!-- ── Charts Row ──────────────────────────────────────────── -->
+<div class="row g-3 mb-4">
+    <!-- Revenue Trend -->
+    <div class="col-xl-8">
+        <div class="chart-card fade-in-up" style="animation-delay:0.3s">
+            <div class="chart-card-header">
+                <div>
+                    <div class="chart-title">Monthly Revenue Trend</div>
+                    <div class="chart-subtitle">2024 full-year performance</div>
+                </div>
+                <a href="/revenue" class="btn-cyber btn btn-sm">View Details</a>
+            </div>
+            <canvas id="monthlyChart" height="280"></canvas>
+        </div>
+    </div>
+
+    <!-- Category Breakdown -->
+    <div class="col-xl-4">
+        <div class="chart-card fade-in-up" style="animation-delay:0.35s">
+            <div class="chart-card-header">
+                <div>
+                    <div class="chart-title">Revenue by Category</div>
+                    <div class="chart-subtitle">Top 5 product categories</div>
+                </div>
+            </div>
+            <canvas id="categoryChart" height="280"></canvas>
+        </div>
+    </div>
+</div>
+
+<!-- ── Info Cards ──────────────────────────────────────────── -->
+<div class="row g-3">
+    <div class="col-xl-4 col-md-6">
+        <div class="chart-card fade-in-up" style="animation-delay:0.4s">
+            <div class="chart-title mb-3">
+                <i class="bi bi-stack me-2" style="color:var(--accent-cyan)"></i>Tech Stack
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+                {% for tech in ['Snowflake','dbt Core','Flask','Gemini AI','Chart.js','Bootstrap 5','Faker','BeautifulSoup4','pandas'] %}
+                <span class="badge" style="background:var(--bg-surface);border:1px solid var(--border);color:var(--text-muted);font-size:0.75rem;font-weight:500;">{{ tech }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-md-6">
+        <div class="chart-card fade-in-up" style="animation-delay:0.45s">
+            <div class="chart-title mb-3">
+                <i class="bi bi-diagram-3 me-2" style="color:var(--accent-purple)"></i>Pipeline Status
+            </div>
+            <div class="d-flex flex-column gap-2" style="font-size:0.85rem;">
+                {% for step, status in [('Data Generation','✅ Complete'),('Web Scraping','✅ Complete'),('Snowflake Load','✅ Complete'),('dbt Models','✅ 12 Models'),('Flask Dashboard','✅ Live'),('Gemini AI','✅ Active')] %}
+                <div class="d-flex justify-content-between align-items-center py-1" style="border-bottom:1px solid var(--border);">
+                    <span style="color:var(--text-muted);">{{ step }}</span>
+                    <span style="color:var(--accent-green);font-size:0.8rem;">{{ status }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4">
+        <div class="chart-card fade-in-up" style="animation-delay:0.5s">
+            <div class="chart-title mb-3">
+                <i class="bi bi-database me-2" style="color:var(--accent-green)"></i>Data Volume
+            </div>
+            <div class="d-flex flex-column gap-2" style="font-size:0.85rem;">
+                {% for table, count in [('Customers','10,000 rows'),('Products','500 rows'),('Orders','50,000 rows'),('Order Items','150,000 rows'),('Competitor Prices','35 rows'),('Total Records','210,535 rows')] %}
+                <div class="d-flex justify-content-between align-items-center py-1" style="border-bottom:1px solid var(--border);">
+                    <span style="color:var(--text-muted);">{{ table }}</span>
+                    <span style="color:var(--accent-cyan);font-family:var(--font-display);font-weight:600;font-size:0.8rem;">{{ count }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+const MONTHS  = {{ monthly_chart['labels'] | tojson }};
+const REVENUE = {{ monthly_chart['revenue'] | tojson }};
+const CATS    = {{ category_chart['labels'] | tojson }};
+const CAT_REV = {{ category_chart['revenue'] | tojson }};
+
+// ── Monthly Revenue Chart ───────────────────────────────────
+if (MONTHS.length > 0) {
+    new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: MONTHS,
+            datasets: [{
+                label: 'Revenue',
+                data: REVENUE,
+                backgroundColor: 'rgba(0, 212, 255, 0.15)',
+                borderColor: 'rgba(0, 212, 255, 0.8)',
+                borderWidth: 2,
+                borderRadius: 4,
+                hoverBackgroundColor: 'rgba(0, 212, 255, 0.3)',
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false }, tooltip: {
+                callbacks: { label: ctx => ` $${ctx.raw.toLocaleString()}` }
+            }},
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#1e2d4a' },
+                     ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'k' }}
+            }
+        }
+    });
+} else {
+    // Demo chart
+    new Chart(document.getElementById('monthlyChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+            datasets: [{
+                label: 'Revenue (Demo)',
+                data: [420000,380000,450000,510000,490000,580000,670000,710000,620000,890000,1250000,980000],
+                backgroundColor: 'rgba(0, 212, 255, 0.15)',
+                borderColor: 'rgba(0, 212, 255, 0.8)',
+                borderWidth: 2,
+                borderRadius: 4,
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false }, tooltip: {
+                callbacks: { label: ctx => ` $${ctx.raw.toLocaleString()}` }
+            }},
+            scales: {
+                x: { grid: { display: false } },
+                y: { grid: { color: '#1e2d4a' },
+                     ticks: { callback: v => '$' + (v/1000).toFixed(0) + 'k' }}
+            }
+        }
+    });
+}
+
+// ── Category Donut Chart ────────────────────────────────────
+const catLabels = CATS.length > 0 ? CATS : ['Electronics','Clothing','Home & Kitchen','Sports','Beauty'];
+const catData   = CAT_REV.length > 0 ? CAT_REV : [4250000, 2890000, 1950000, 1340000, 980000];
+
+new Chart(document.getElementById('categoryChart'), {
+    type: 'doughnut',
+    data: {
+        labels: catLabels,
+        datasets: [{
+            data: catData,
+            backgroundColor: ['rgba(0,212,255,0.8)','rgba(124,58,237,0.8)',
+                              'rgba(16,185,129,0.8)','rgba(245,158,11,0.8)',
+                              'rgba(239,68,68,0.8)'],
+            borderWidth: 0,
+            hoverOffset: 8,
+        }]
+    },
+    options: {
+        responsive: true,
+        cutout: '70%',
+        plugins: {
+            legend: { position: 'bottom', labels: { padding: 12, font: { size: 11 } } },
+            tooltip: { callbacks: { label: ctx => ` $${(ctx.raw/1000000).toFixed(1)}M` }}
+        }
+    }
+});
+});
+</script>
+{% endblock %}
