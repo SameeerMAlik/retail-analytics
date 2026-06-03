@@ -14,7 +14,6 @@ from functools import lru_cache
 from typing import Optional
 
 import pandas as pd
-import snowflake.connector
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -65,6 +64,13 @@ class SnowflakeService:
 
             if missing:
                 log.warning("Snowflake credentials missing: %s. Running in DEMO MODE.", missing)
+                self._conn = None
+                return
+
+            try:
+                import snowflake.connector
+            except ImportError:
+                log.warning("snowflake-connector not installed. Running in DEMO MODE.")
                 self._conn = None
                 return
 

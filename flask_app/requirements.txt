@@ -1,0 +1,7 @@
+# Vercel/serverless — dashboard demo mode (no Snowflake/dbt)
+flask==3.0.3
+Werkzeug==3.0.3
+pandas==2.2.2
+numpy==1.26.4
+python-dotenv==1.0.1
+requests==2.31.0

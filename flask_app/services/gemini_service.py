@@ -75,8 +75,21 @@ MODELS_TO_TRY = [
 class GeminiService:
 
     def __init__(self):
-        self.api_key    = os.getenv("GEMINI_API_KEY")
+        self.api_key = os.getenv("GEMINI_API_KEY")
         self.model_name = None
+        self._model_checked = False
+
+    def _ensure_model(self):
+        """Resolve model on first use — avoids slow API probes during serverless cold start."""
+        if self._model_checked:
+            return
+        self._model_checked = True
+        if not self.api_key:
+            return
+        if os.getenv("VERCEL"):
+            self.model_name = MODELS_TO_TRY[0]
+            log.info("Vercel deploy: using Gemini model %s (no startup probe)", self.model_name)
+            return
         self._find_working_model()
 
     def _find_working_model(self):
@@ -108,12 +121,14 @@ class GeminiService:
         log.warning("No working Gemini model found. Running in demo mode.")
 
     def is_available(self) -> bool:
+        self._ensure_model()
         return self.model_name is not None
 
     def generate_sql(self, user_question: str) -> tuple:
         if not user_question or not user_question.strip():
             return "", "Please provide a question"
 
+        self._ensure_model()
         if not self.is_available():
             return self._demo_sql(user_question), None
 

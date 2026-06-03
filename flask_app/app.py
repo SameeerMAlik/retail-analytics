@@ -13,6 +13,12 @@ from datetime import datetime
 from dotenv import load_dotenv
 from flask import Flask, render_template, jsonify
 
+# Vercel/serverless: run from flask_app so routes and templates resolve
+_APP_DIR = os.path.dirname(os.path.abspath(__file__))
+if _APP_DIR not in sys.path:
+    sys.path.insert(0, _APP_DIR)
+os.chdir(_APP_DIR)
+
 # Fix Windows Unicode encoding for terminal output
 if sys.platform == "win32":
     import io
@@ -29,18 +35,24 @@ def create_app() -> Flask:
     app.config["DEBUG"]         = os.getenv("FLASK_DEBUG", "False").lower() == "true"
     app.config["JSON_SORT_KEYS"] = False
 
-    # Logging
+    # Logging (file handler skipped on Vercel — read-only filesystem)
     log_level = logging.DEBUG if app.config["DEBUG"] else logging.INFO
+    handlers = [logging.StreamHandler()]
+    if not os.getenv("VERCEL"):
+        try:
+            handlers.append(
+                logging.FileHandler(
+                    f"flask_app_{datetime.now().strftime('%Y%m%d')}.log",
+                    encoding="utf-8",
+                )
+            )
+        except OSError:
+            pass
     logging.basicConfig(
         level=log_level,
         format="%(asctime)s [%(levelname)s] %(name)s - %(message)s",
-        handlers=[
-            logging.StreamHandler(),
-            logging.FileHandler(
-                f"flask_app_{datetime.now().strftime('%Y%m%d')}.log",
-                encoding="utf-8"
-            )
-        ]
+        handlers=handlers,
+        force=True,
     )
     app.logger.setLevel(log_level)
 
